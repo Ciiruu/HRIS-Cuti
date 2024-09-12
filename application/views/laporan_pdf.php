@@ -80,7 +80,7 @@
             'Desember'
         );
         $pecahkan = explode('-', $tanggal);
-        return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+        return $pecahkan[2] . ' ' . $bulan[(int) $pecahkan[1]] . ' ' . $pecahkan[0];
     }
 
     $id = 0;
@@ -103,7 +103,7 @@
         $years = floor($diff / (365 * 60 * 60 * 24));
         $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
         $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-    ?>
+        ?>
         <div class="header">
             <img src="<?= base_url(); ?>assets/login/images/GDHY.png" alt="Logo" height="150" width="200">
             <!-- <h2>GRAND DIAMOND</h2>
@@ -127,7 +127,7 @@
                 </tr>
                 <tr>
                     <td>Commencement Date</td>
-                    <td>: <?= tgl_indo($mulai) ?></td>
+                    <td>: <?= date('d-m-Y', strtotime(tgl_indo($mulai))) ?></td>
                 </tr>
             </table>
         </div>
@@ -138,9 +138,9 @@
             <table class="form-table">
                 <tr>
                     <td>Period of Leave</td>
-                    <td>: From <?= tgl_indo($mulai) ?></td>
+                    <td>: From &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($mulai))) ?></td>
                     <td>To</td>
-                    <td>: <?= tgl_indo($berakhir) ?></td>
+                    <td>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($berakhir))) ?></td>
                     <td>(<?= $id_status_cuti ?>)days</td>
                 </tr>
                 <tr>

@@ -124,9 +124,9 @@
                                                     <td><?= $no ?></td>
                                                     <td><?= $nama_lengkap ?></td>
                                                     <td><?= $alasan ?></td>
-                                                    <td><?= $tgl_diajukan ?></td>
-                                                    <td><?= $mulai ?></td>
-                                                    <td><?= $berakhir ?></td>
+                                                    <td><?= date('d-M-Y', strtotime($tgl_diajukan));?></td>
+                                                    <td><?= date('d-M-Y', strtotime( $mulai ))?></td>
+                                                    <td><?= date('d-M-Y', strtotime($berakhir)) ?></td>
                                                     <td><?php if ($id_status_cuti == 1) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">

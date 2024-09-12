@@ -92,7 +92,7 @@
                                             <?php
 
                                             $no = 0;
-                                            foreach ($cuti as $i) :
+                                            foreach ($cuti as $i):
                                                 $no++;
                                                 $id_cuti = $i['id_cuti'];
                                                 $id_user = $i['id_user'];
@@ -105,14 +105,14 @@
                                                 $alasan_verifikasi = $i['alasan_verifikasi'];
                                                 $perihal_cuti = $i['perihal_cuti'];
 
-                                            ?>
+                                                ?>
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $nama_lengkap ?></td>
                                                     <td><?= $alasan ?></td>
-                                                    <td><?= $tgl_diajukan ?></td>
-                                                    <td><?= $mulai ?></td>
-                                                    <td><?= $berakhir ?></td>
+                                                    <td><?= date('d-M-Y', strtotime( $tgl_diajukan)) ?></td>
+                                                    <td><?= date('d-M-Y', strtotime($mulai ))?></td>
+                                                    <td><?= date('d-M-Y', strtotime($berakhir ))?></td>
                                                     <td><?= $perihal_cuti ?></td>
                                                     <td><?php if ($alasan_verifikasi == NULL) { ?>
                                                             <a href="" class="btn btn-warning">
@@ -189,7 +189,8 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Setujui Pengajuan Cuti/Absen
+                                                                <h5 class="modal-title" id="exampleModalLabel">Setujui
+                                                                    Pengajuan Cuti/Absen
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
@@ -238,7 +239,8 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Tolak Pengajuan
+                                                                <h5 class="modal-title" id="exampleModalLabel">Tolak
+                                                                    Pengajuan
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
