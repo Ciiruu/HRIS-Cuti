@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url(); ?>Calender/view_admin" class="nav-link">
+                    <a href="<?= base_url(); ?>Calendar/view_admin" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Calendar
