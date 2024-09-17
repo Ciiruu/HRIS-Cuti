@@ -41,6 +41,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?= base_url(); ?>Calender/view_admin" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Calendar
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="<?= base_url(); ?>Pegawai/view_admin" class="nav-link">
                         <i class="nav-icon fas fa-users "></i>
                         <p>Data Karyawan</p>
@@ -58,12 +66,7 @@
                         <p>Pengaturan</p>
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a href="<?= base_url(); ?>" class="nav-link">
-                    <i class="nav-icon fas fa-columns"></i>
-                    <p>Kanban Board</p>
-                    </a>
-                </li> -->
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

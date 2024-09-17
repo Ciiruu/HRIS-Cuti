@@ -102,7 +102,8 @@
                             Download Template Excel
                         </button> -->
 
-                        <button type="button" class="btn btn-primary mt-3 mr-2" data-toggle="modal" data-target="#exampleModal">
+                        <button type="button" class="btn btn-primary mt-3 mr-2" data-toggle="modal"
+                            data-target="#exampleModal">
                             Upload Excel
                         </button>
 
@@ -142,7 +143,7 @@
                                         <tbody>
                                             <?php
                                             $no = 0;
-                                            foreach ($pegawai as $i) :
+                                            foreach ($pegawai as $i):
                                                 $no++;
                                                 $id_user = $i['id_user'];
                                                 $username = $i['username'];
@@ -154,7 +155,7 @@
                                                 $no_telp = $i['no_telp'];
                                                 $alamat = $i['alamat'];
 
-                                            ?>
+                                                ?>
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $username ?></td>
@@ -236,44 +237,49 @@
                                                             <div class="modal-body">
                                                                 <form action="<?= base_url(); ?>Pegawai/edit_pegawai"
                                                                     method="POST">
-                                                                    <input type="text" value="<?= $id_user ?>" name="id_user" hidden>
+                                                                    <input type="text" value="<?= $id_user ?>"
+                                                                        name="id_user" hidden>
                                                                     <div class="form-group">
                                                                         <label for="username">Username</label>
                                                                         <input type="text" class="form-control"
                                                                             id="username" aria-describedby="username"
-                                                                            name="username" value="<?= $username ?>" required>
+                                                                            name="username" value="<?= $username ?>"
+                                                                            required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="password">Password</label>
                                                                         <input type="text" class="form-control"
                                                                             id="password" aria-describedby="password"
-                                                                            name="password" value="<?= $password ?>" required>
+                                                                            name="password" value="<?= $password ?>"
+                                                                            required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="email">email</label>
                                                                         <input type="text" class="form-control" id="email"
-                                                                            aria-describedby="email" name="email" value="<?= $email ?>" required>
+                                                                            aria-describedby="email" name="email"
+                                                                            value="<?= $email ?>" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="nama_lengkap">Nama Lengkap</label>
                                                                         <input type="text" class="form-control"
                                                                             id="nama_lengkap"
                                                                             aria-describedby="nama_lengkap"
-                                                                            name="nama_lengkap" value="<?= $nama_lengkap ?>" required>
+                                                                            name="nama_lengkap" value="<?= $nama_lengkap ?>"
+                                                                            required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="id_jenis_kelamin">Jenis Kelamin</label>
                                                                         <select class="form-control" id="id_jenis_kelamin"
                                                                             name="id_jenis_kelamin" required>
-                                                                            <?php foreach ($jenis_kelamin_p as $u) :
+                                                                            <?php foreach ($jenis_kelamin_p as $u):
                                                                                 $id = $u["id_jenis_kelamin"];
                                                                                 $jenis_kelamin = $u["jenis_kelamin"];
-                                                                            ?>
+                                                                                ?>
                                                                                 <option value="<?= $id ?>" <?php if ($id == $id_jenis_kelamin) {
-                                                                                                                echo 'selected';
-                                                                                                            } else {
-                                                                                                                echo '';
-                                                                                                            } ?>><?= $jenis_kelamin ?>
+                                                                                      echo 'selected';
+                                                                                  } else {
+                                                                                      echo '';
+                                                                                  } ?>><?= $jenis_kelamin ?>
                                                                                 </option>
 
                                                                             <?php endforeach ?>
@@ -282,12 +288,14 @@
                                                                     <div class="form-group">
                                                                         <label for="no_telp">No Telp</label>
                                                                         <input type="text" class="form-control" id="no_telp"
-                                                                            aria-describedby="no_telp" name="no_telp" value="<?= $no_telp ?>" required>
+                                                                            aria-describedby="no_telp" name="no_telp"
+                                                                            value="<?= $no_telp ?>" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="alamat">Alamat</label>
                                                                         <input type="text" class="form-control" id="alamat"
-                                                                            aria-describedby="alamat" name="alamat" value="<?= $alamat ?>" required>
+                                                                            aria-describedby="alamat" name="alamat"
+                                                                            value="<?= $alamat ?>" required>
                                                                     </div>
                                                                     <button type="submit"
                                                                         class="btn btn-primary">Submit</button>
@@ -312,7 +320,8 @@
             </section>
             <!-- /.content -->
             <!-- Modal Tambah Pegawai lebih dari 1-->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -322,11 +331,13 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="<?= base_url(); ?>Pegawai/upload_excel" method="POST" enctype="multipart/form-data">
+                            <form action="<?= base_url(); ?>Pegawai/upload_excel" method="POST"
+                                enctype="multipart/form-data">
                                 <!-- Input file untuk mengunggah Excel -->
                                 <div class="form-group">
                                     <label for="file">Unggah File Excel</label>
-                                    <input type="file" class="form-control" id="file" name="file" accept=".xls, .xlsx" required>
+                                    <input type="file" class="form-control" id="file" name="file" accept=".xls, .xlsx"
+                                        required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Unggah</button>
                             </form>
@@ -340,8 +351,7 @@
         <!-- tambah 1 pegawai -->
 
         <!-- Modal Tambah Pegawai -->
-        <div class="modal fade" id="tambah1" tabindex="-1" aria-labelledby="tambah1"
-            aria-hidden="true">
+        <div class="modal fade" id="tambah1" tabindex="-1" aria-labelledby="tambah1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -364,8 +374,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">email</label>
-                                <input type="text" class="form-control" id="email" aria-describedby="email"
-                                    name="email" required>
+                                <input type="text" class="form-control" id="email" aria-describedby="email" name="email"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="nama_lengkap">Nama Lengkap</label>
@@ -375,10 +385,10 @@
                             <div class="form-group">
                                 <label for="id_jenis_kelamin">Jenis Kelamin</label>
                                 <select class="form-control" id="id_jenis_kelamin" name="id_jenis_kelamin" required>
-                                    <?php foreach ($jenis_kelamin_p as $u) :
+                                    <?php foreach ($jenis_kelamin_p as $u):
                                         $id = $u["id_jenis_kelamin"];
                                         $jenis_kelamin = $u["jenis_kelamin"];
-                                    ?>
+                                        ?>
                                         <option value="<?= $id ?>"><?= $jenis_kelamin ?></option>
 
                                     <?php endforeach ?>

@@ -3,11 +3,6 @@
 
 <head>
     <?php $this->load->view("admin/components/header.php") ?>
-    <!-- FullCalendar CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
-    <!-- FullCalendar JS -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-    
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
