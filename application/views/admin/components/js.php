@@ -49,57 +49,15 @@
 <script src="<?= base_url(); ?>assets/admin_lte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": true,
-            "buttons": ["colvis"],
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $(document).ready(function() {
+        $('#example1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+        });
     });
-
-    // // Script for To Do List
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // Fungsi untuk menambah item ke daftar
-    //     document.querySelector('.btn-primary').addEventListener('click', function () {
-    //         let todoList = document.querySelector('.todo-list');
-
-    //         // Buat elemen baru
-    //         let newItem = document.createElement('li');
-    //         let timestamp = new Date().getTime();
-    //         let newCheckboxId = `todoCheck_${timestamp}`;
-
-    //         newItem.innerHTML = `
-    //             <span class="handle">
-    //                 <i class="fas fa-ellipsis-v"></i>
-    //                 <i class="fas fa-ellipsis-v"></i>
-    //             </span>
-    //             <div class="icheck-primary d-inline ml-2">
-    //                 <input type="checkbox" value="" id="${newCheckboxId}">
-    //                 <label for="${newCheckboxId}"></label>
-    //             </div>
-    //             <span class="text">New Task</span>
-    //             <small class="badge badge-info"><i class="far fa-clock"></i> Just added</small>
-    //             <div class="tools">
-    //                 <i class="fas fa-edit"></i>
-    //                 <i class="fas fa-trash-o"></i>
-    //             </div>
-    //         `;
-
-    //         // Tambahkan elemen baru ke daftar
-    //         todoList.appendChild(newItem);
-
-    //         // Tambahkan fungsi untuk menghapus item
-    //         newItem.querySelector('.fa-trash-o').addEventListener('click', function () {
-    //             newItem.remove();
-    //         });
-    //     });
-
-    //     // Fungsi untuk menghapus item dari daftar
-    //     document.querySelectorAll('.fa-trash-o').forEach(function (deleteBtn) {
-    //         deleteBtn.addEventListener('click', function () {
-    //             this.closest('li').remove();
-    //         });
-    //     });
-    // });
 </script>

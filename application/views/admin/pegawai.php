@@ -104,12 +104,14 @@
 
                         <button type="button" class="btn btn-primary mt-3 mr-2" data-toggle="modal"
                             data-target="#exampleModal">
-                            Upload Excel
+                            <i class="fas fa-upload"></i> Upload Excel
                         </button>
 
+
                         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#tambah1">
-                            Tambah 1 Data
+                            <i class="fas fa-plus"></i> Tambah 1 Data
                         </button>
+
                         <br>
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -319,13 +321,15 @@
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
-            <!-- Modal Tambah Pegawai lebih dari 1-->
+            <!-- Modal Tambah Pegawai lebih dari 1 -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Tambah Pegawai</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <i class="fas fa-user-plus"></i> Tambah Pegawai
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -335,16 +339,21 @@
                                 enctype="multipart/form-data">
                                 <!-- Input file untuk mengunggah Excel -->
                                 <div class="form-group">
-                                    <label for="file">Unggah File Excel</label>
+                                    <label for="file">
+                                        <i class="fas fa-file-excel"></i> Unggah File Excel
+                                    </label>
                                     <input type="file" class="form-control" id="file" name="file" accept=".xls, .xlsx"
                                         required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Unggah</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload"></i> Unggah
+                                </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- /.content-wrapper -->
 

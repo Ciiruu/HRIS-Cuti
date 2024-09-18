@@ -48,13 +48,15 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?= base_url();?>assets/admin_lte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?= base_url();?>assets/admin_lte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
-$(function() {
-    $("#example1").DataTable({
-        "responsive": true,
-        "lengthChange": true,
-        "autoWidth": true,
-        "buttons": ["colvis"],
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-});
+    $(document).ready(function() {
+        $('#example1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+        });
+    });
 </script>

@@ -84,7 +84,7 @@
                                                 <th>Perihal Pengajuan</th>
                                                 <th>Alasan Verifikasi</th>
                                                 <th>Status Pengajuan</th>
-                                                <th>Cetak Surat</th>
+                                                <!-- <th>Cetak Surat</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -151,7 +151,7 @@
                                                             </div>
                                                         <?php } ?>
                                                     </td>
-                                                    <td><?php if ($id_status_cuti == 2) { ?>
+                                                    <!-- <td><?php if ($id_status_cuti == 2) { ?>
                                                             <a href="<?= base_url(); ?>Cetak/surat_cuti_pdf/<?= $id_cuti ?>"
                                                                 class="btn btn-success">
                                                                 Cetak Surat
@@ -161,7 +161,7 @@
                                                                 Belum Dapat Mencetak
                                                             </a>
                                                         <?php } ?>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <div class="table-responsive">
                                                             <div class="table table-striped table-hover ">

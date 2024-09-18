@@ -16,12 +16,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <?php $this->load->view("admin/components/header.php") ?>
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="<?= base_url(); ?>assets/admin_lte/dist/img/Loading.png"
@@ -87,6 +85,8 @@
     <!-- fullCalendar 2.2.5 -->
     <script src="<?= base_url(); ?>assets/admin_lte/plugins/moment/moment.min.js"></script>
     <script src="<?= base_url(); ?>assets/admin_lte/plugins/fullCalendar/main.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Page specific script -->
     <script>
         $(document).ready(function () {
@@ -99,80 +99,90 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 themeSystem: 'bootstrap',
-
-                events: '<?= base_url() ?>calendar/load_events', // Memuat event dari controller
+                events: '<?= base_url() ?>calendar/load_events',
+                timeZone: 'local',
                 selectable: true,
                 selectHelper: true,
                 editable: true,
                 droppable: true,
 
-                // Menambahkan event baru dengan pop-up form
                 select: function (info) {
                     Swal.fire({
                         title: 'Add New Event',
                         html: `
-        <div class="form-group">
-            <label for="title">Event Title</label>
-            <input id="title" class="swal2-input" placeholder="Enter event title">
-        </div>
-        <div class="form-group">
-            <label for="start">Start Date & Time</label>
-            <input id="start" class="swal2-input" type="datetime-local" value="${info.startStr}">
-        </div>
-        <div class="form-group">
-            <label for="end">End Date & Time</label>
-            <input id="end" class="swal2-input" type="datetime-local" value="${info.endStr}">
-        </div>
-    `,
-                        confirmButtonText: 'Add Event',
-                        showCancelButton: true,
-                        cancelButtonText: 'Cancel',
+                            <div style="text-align: left; padding: 0 20px;">
+                                <div style="margin-bottom: 15px;">
+                                    <label for="event-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Event name</label>
+                                    <input id="event-name" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Enter your event name">
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="width: 48%;">
+                                        <label for="event-start" style="display: block; margin-bottom: 5px; font-weight: bold;">Event start</label>
+                                        <input id="event-start-date" class="swal2-input" type="date" style="width: 100%; margin: 0 0 5px 0;" value="${info.startStr.split('T')[0]}">
+                                        <input id="event-start-time" class="swal2-input" type="time" style="width: 100%; margin: 0;">
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <label for="event-end" style="display: block; margin-bottom: 5px; font-weight: bold;">Event end</label>
+                                        <input id="event-end-date" class="swal2-input" type="date" style="width: 100%; margin: 0 0 5px 0;" value="${info.endStr.split('T')[0]}">
+                                        <input id="event-end-time" class="swal2-input" type="time" style="width: 100%; margin: 0;">
+                                    </div>
+                                </div>
+                            </div>
+                        `,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: 'Save Event',
+                        customClass: {
+                            confirmButton: 'btn btn-primary',
+                            closeButton: 'btn btn-light'
+                        },
+                        buttonsStyling: false,
+                        didOpen: () => {
+                            const closeButton = Swal.getCloseButton();
+                            closeButton.innerHTML = '&times;';
+                            closeButton.style.fontSize = '24px';
+                            closeButton.style.padding = '0';
+                            closeButton.style.margin = '0';
+                            closeButton.style.lineHeight = '1';
+                        },
                         preConfirm: () => {
-                            const title = Swal.getPopup().querySelector('#title').value;
-                            const start = Swal.getPopup().querySelector('#start').value;
-                            const end = Swal.getPopup().querySelector('#end').value;
+                            const eventName = document.getElementById('event-name').value;
+                            const startDate = document.getElementById('event-start-date').value;
+                            const startTime = document.getElementById('event-start-time').value;
+                            const endDate = document.getElementById('event-end-date').value;
+                            const endTime = document.getElementById('event-end-time').value;
 
-                            if (!title) {
-                                Swal.showValidationMessage('Please enter an event title');
-                                return false;
-                            }
-                            if (!start || !end) {
-                                Swal.showValidationMessage('Please select both start and end dates');
+                            if (!eventName || !startDate || !startTime || !endDate || !endTime) {
+                                Swal.showValidationMessage('Please fill in all fields');
                                 return false;
                             }
 
-                            return { title: title, start: start, end: end };
+                            return {
+                                title: eventName,
+                                start: `${startDate}T${startTime}`,
+                                end: `${endDate}T${endTime}`
+                            };
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
+                            const eventData = result.value;
                             $.ajax({
                                 url: '<?= base_url() ?>calendar/insert_event',
-                                type: 'POST',
-                                data: result.value,
-                                success: function () {
-                                    calendar.refetchEvents(); // Reload event setelah ditambahkan
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Event Created',
-                                        text: 'The event was created successfully!',
-                                        confirmButtonText: 'OK'
-                                    });
+                                method: 'POST',
+                                data: eventData,
+                                success: function (response) {
+                                    calendar.addEvent(eventData);
+                                    Swal.fire('Success!', 'Event added successfully', 'success');
                                 },
                                 error: function () {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Error',
-                                        text: 'There was an error creating the event.',
-                                        confirmButtonText: 'OK'
-                                    });
+                                    Swal.fire('Error!', 'Failed to add event', 'error');
                                 }
                             });
                         }
                     });
-
                 },
 
-                // Mengedit event
+                // Event Drop (Drag and Drop) update function
                 eventDrop: function (event) {
                     var id = event.event.id;
                     var start = event.event.startStr;
@@ -203,29 +213,84 @@
                     });
                 },
 
-                // Menghapus event dengan konfirmasi
+
+
                 eventClick: function (event) {
+                    var eventStart = event.event.start;
+                    var eventEnd = event.event.end;
+
+                    // Formatkan tanggal dan waktu untuk input
+                    var formattedStartDate = moment(eventStart).format('YYYY-MM-DD');
+                    var formattedStartTime = moment(eventStart).format('HH:mm');
+                    var formattedEndDate = eventEnd ? moment(eventEnd).format('YYYY-MM-DD') : '';
+                    var formattedEndTime = eventEnd ? moment(eventEnd).format('HH:mm') : '';
+
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
+                        title: 'Edit or Delete Event',
+                        html: `
+                            <div style="text-align: left; padding: 0 20px;">
+                                <div style="margin-bottom: 15px;">
+                                    <label for="event-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Event name</label>
+                                    <input id="event-name" class="swal2-input" style="width: 100%; margin: 0;" value="${event.event.title}">
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="width: 48%;">
+                                        <label for="event-start" style="display: block; margin-bottom: 5px; font-weight: bold;">Event start</label>
+                                        <input id="event-start-date" class="swal2-input" type="date" style="width: 100%; margin: 0 0 5px 0;" value="${formattedStartDate}">
+                                        <input id="event-start-time" class="swal2-input" type="time" style="width: 100%; margin: 0;" value="${formattedStartTime}">
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <label for="event-end" style="display: block; margin-bottom: 5px; font-weight: bold;">Event end</label>
+                                        <input id="event-end-date" class="swal2-input" type="date" style="width: 100%; margin: 0 0 5px 0;" value="${formattedEndDate}">
+                                        <input id="event-end-time" class="swal2-input" type="time" style="width: 100%; margin: 0;" value="${formattedEndTime}">
+                                    </div>
+                                </div>
+                            </div>
+                        `,
                         showCancelButton: true,
-                        confirmButtonText: 'Yes, delete it!',
-                        cancelButtonText: 'Cancel'
+                        confirmButtonText: 'Save Changes',
+                        cancelButtonText: '<i class="fa fa-trash"></i> Delete Event',
+                        showCloseButton: true,
+                        customClass: {
+                            cancelButton: 'btn btn-danger btn-space', // Tambahkan kelas untuk space
+                            confirmButton: 'btn btn-success btn-space', // Tambahkan kelas untuk space
+                            closeButton: 'btn btn-light'
+                        },
+                        preConfirm: () => {
+                            const eventName = document.getElementById('event-name').value;
+                            const startDate = document.getElementById('event-start-date').value;
+                            const startTime = document.getElementById('event-start-time').value;
+                            const endDate = document.getElementById('event-end-date').value;
+                            const endTime = document.getElementById('event-end-time').value;
+
+                            if (!eventName || !startDate || !startTime) {
+                                Swal.showValidationMessage('Please fill in all required fields');
+                                return false;
+                            }
+
+                            return {
+                                id: event.event.id,
+                                title: eventName,
+                                start: `${startDate}T${startTime}`,
+                                end: endDate && endTime ? `${endDate}T${endTime}` : null
+                            };
+                        }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            var id = event.event.id;
-
+                            const updatedEvent = result.value;
                             $.ajax({
-                                url: '<?= base_url() ?>calendar/delete_event',
+                                url: '<?= base_url() ?>calendar/update_event',
                                 type: 'POST',
-                                data: { id: id },
+                                data: updatedEvent,
                                 success: function () {
+                                    event.event.setProp('title', updatedEvent.title);
+                                    event.event.setStart(updatedEvent.start);
+                                    event.event.setEnd(updatedEvent.end);
                                     calendar.refetchEvents();
                                     Swal.fire({
                                         icon: 'success',
-                                        title: 'Event Deleted',
-                                        text: 'Event was deleted successfully!',
+                                        title: 'Event Updated',
+                                        text: 'Event was updated successfully!',
                                         confirmButtonText: 'OK'
                                     });
                                 },
@@ -233,24 +298,56 @@
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Error',
-                                        text: 'There was an error deleting the event.',
+                                        text: 'There was an error updating the event.',
                                         confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    var id = event.event.id;
+
+                                    $.ajax({
+                                        url: '<?= base_url() ?>calendar/delete_event',
+                                        type: 'POST',
+                                        data: { id: id },
+                                        success: function () {
+                                            event.event.remove();
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Event Deleted',
+                                                text: 'Event was deleted successfully!',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        },
+                                        error: function () {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Error',
+                                                text: 'There was an error deleting the event.',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        }
                                     });
                                 }
                             });
                         }
                     });
                 }
+
             });
 
             calendar.render();
         });
     </script>
-
-
-
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
