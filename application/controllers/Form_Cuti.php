@@ -39,7 +39,7 @@ class Form_Cuti extends CI_Controller
 
 			if ($cuti_menunggu) {
 				// Jika ada cuti yang masih menunggu, tampilkan pesan error
-				$this->session->set_flashdata('error', 'Anda tidak bisa mengajukan cuti baru karena ada cuti yang masih menunggu konfirmasi.');
+				$this->session->set_flashdata('error_tunggu', 'Anda tidak bisa mengajukan cuti baru karena ada cuti yang masih menunggu konfirmasi.');
 				redirect('Form_Cuti/view_pegawai');
 			} else {
 				// Proses pengajuan cuti baru jika tidak ada cuti yang menunggu konfirmasi

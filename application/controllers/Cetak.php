@@ -18,7 +18,7 @@ class Cetak extends CI_Controller {
     
         $this->pdf->setPaper('Letter', 'potrait');
         $this->pdf->set_option('isRemoteEnabled', true);
-        $this->pdf->filename = "APPLICATION FOR LEAVE/ABSENCE.pdf";
+        $this->pdf->filename = "APPLICATION FOR LEAVE-ABSENCE.pdf";
         $this->pdf->load_view('laporan_pdf', $data);
     
     

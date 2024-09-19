@@ -20,6 +20,17 @@
         </script>
     <?php } ?>
 
+    <?php if ($this->session->flashdata('error_tunggu')) { ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.0/sweetalert2.all.min.js"></script>
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Anda tidak bisa mengajukan cuti baru karena ada cuti yang masih menunggu konfirmasi.',
+                icon: 'error'
+            });
+        </script>
+    <?php } ?>
+
     <?php if ($this->session->flashdata('error')) { ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.0/sweetalert2.all.min.js"></script>
         <script>
