@@ -9,6 +9,8 @@ class Pegawai extends CI_Controller
 		parent::__construct();
 		$this->load->model('m_user');
 		$this->load->model('m_jenis_kelamin');
+		$this->load->model('m_department');
+
 	}
 
 	public function view_super_admin()
@@ -18,6 +20,7 @@ class Pegawai extends CI_Controller
 
 			$data['pegawai'] = $this->m_user->get_all_pegawai()->result_array();
 			$data['jenis_kelamin_p'] = $this->m_jenis_kelamin->get_all_jenis_kelamin()->result_array();
+			$data['department_p'] = $this->m_department->get_all_department()->result_array(); // Ambil data departemen
 			$this->load->view('super_admin/pegawai', $data);
 
 		} else {
@@ -33,8 +36,9 @@ class Pegawai extends CI_Controller
 	{
 		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 2) {
 
-			$data['pegawai'] = $this->m_user->get_all_pegawai()->result_array();
+			$data['pegawai'] = $this->m_user->get_all_pegawai(); // Ambil data pegawai
 			$data['jenis_kelamin_p'] = $this->m_jenis_kelamin->get_all_jenis_kelamin()->result_array();
+			$data['department_p'] = $this->m_department->get_all_department()->result_array(); // Ambil data departemen
 			$this->load->view('admin/pegawai', $data);
 
 		} else {
@@ -57,10 +61,11 @@ class Pegawai extends CI_Controller
 			$id_jenis_kelamin = $this->input->post("id_jenis_kelamin");
 			$no_telp = $this->input->post("no_telp");
 			$alamat = $this->input->post("alamat");
+			$id_department = $this->input->post("id_department"); // Ambil departemen dari input
 			$id_user_level = 1;
 			$id = md5($username . $email . $password);
 
-			$hasil = $this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat);
+			$hasil = $this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
 
 			if ($hasil == false) {
 				$this->session->set_flashdata('error', 'Gagal menambahkan pegawai.');
@@ -98,6 +103,7 @@ class Pegawai extends CI_Controller
 					$id_jenis_kelamin = $sheet->getCell('E' . $row)->getValue();
 					$no_telp = $sheet->getCell('F' . $row)->getValue();
 					$alamat = $sheet->getCell('G' . $row)->getValue();
+					$id_department = $sheet->getCell('H' . $row)->getValue(); // Ambil id_department dari kolom H
 					$id_user_level = 1;
 					$id = md5($username . $email . $password);
 
@@ -110,10 +116,11 @@ class Pegawai extends CI_Controller
 						'nama_lengkap' => $nama_lengkap,
 						'id_jenis_kelamin' => $id_jenis_kelamin,
 						'no_telp' => $no_telp,
-						'alamat' => $alamat
+						'alamat' => $alamat,
+						'id_department' => $id_department // Tambahkan id_department
 					);
 
-					$this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat);
+					$this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
 				}
 
 				$this->session->set_flashdata('success', 'Data pegawai berhasil diunggah.');
@@ -127,6 +134,7 @@ class Pegawai extends CI_Controller
 			redirect('Login/index');
 		}
 	}
+
 	// sampai sini
 
 	// function untuk download template
@@ -136,6 +144,7 @@ class Pegawai extends CI_Controller
 	{
 		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 2) {
 
+			
 			$username = $this->input->post("username");
 			$password = $this->input->post("password");
 			$email = $this->input->post("email");
@@ -143,11 +152,14 @@ class Pegawai extends CI_Controller
 			$id_jenis_kelamin = $this->input->post("id_jenis_kelamin");
 			$no_telp = $this->input->post("no_telp");
 			$alamat = $this->input->post("alamat");
+			$id_department = $this->input->post("id_department");
 			$id_user_level = 1;
 			$id = $this->input->post("id_user");
 
+			
 
-			$hasil = $this->m_user->update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat);
+
+			$hasil = $this->m_user->update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat,$id_department);
 
 			if ($hasil == false) {
 				$this->session->set_flashdata('eror_edit', 'eror_edit');

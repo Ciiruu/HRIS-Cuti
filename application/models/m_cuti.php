@@ -2,7 +2,6 @@
 
 class M_cuti extends CI_Model
 {
-
     public function cekCutiMenunggu($id_user)
     {
         $this->db->where('id_user', $id_user);
@@ -109,16 +108,16 @@ class M_cuti extends CI_Model
         return $query->result_array();
     }
 
-    public function insert_data_cuti($id_cuti, $id_user, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti)
+    public function insert_data_cuti($id_cuti, $id_user, $nama_staf, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti)
     {
         $this->db->trans_start();
-        $this->db->query("INSERT INTO cuti(id_cuti,id_user, alasan, tgl_diajukan, mulai, berakhir, id_status_cuti, perihal_cuti) VALUES ('$id_cuti','$id_user','$alasan',NOW(),'$mulai', '$berakhir', '$id_status_cuti', '$perihal_cuti')");
+        $this->db->query("INSERT INTO cuti (id_cuti, id_user, nama_staf, alasan, tgl_diajukan, mulai, berakhir, id_status_cuti, perihal_cuti) 
+                      VALUES ('$id_cuti', '$id_user', '$nama_staf', '$alasan', NOW(), '$mulai', '$berakhir', '$id_status_cuti', '$perihal_cuti')");
         $this->db->trans_complete();
-        if ($this->db->trans_status() == true)
-            return true;
-        else
-            return false;
+        return $this->db->trans_status() == true; // Mengembalikan status transaksinya
     }
+
+
 
     public function delete_cuti($id_cuti)
     {

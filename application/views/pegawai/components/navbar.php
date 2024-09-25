@@ -46,7 +46,7 @@
             <div class="modal-body">
                 <?php
                 $id = 0;
-                foreach ($pegawai_data as $i) :
+                foreach ($pegawai_data as $i):
                     $id++;
                     $id_user = $i['id_user'];
                     $username = $i['username'];
@@ -55,13 +55,12 @@
                     $id_jenis_kelamin = $i['id_jenis_kelamin'];
                     $email = $i['email'];
                     $nip = $i['nip'];
-                    $pangkat = $i['pangkat'];
+                    $id_department = $i['id_department'];
                     $jabatan = $i['jabatan'];
-                    $id_jenis_kelamin = $i['id_jenis_kelamin'];
                     $no_telp = $i['no_telp'];
                     $alamat = $i['alamat'];
 
-                ?>
+                    ?>
                     <form action="<?= base_url(); ?>Settings/lengkapi_data" method="POST">
                         <input type="text" value="<?= $this->session->userdata('id_user'); ?>" name="id" hidden>
                         <div class="form-group">
@@ -72,38 +71,63 @@
                         <div class="form-group">
                             <label for="id_jenis_kelamin">Jenis Kelamin</label>
                             <select class="form-control" id="id_jenis_kelamin" name="id_jenis_kelamin" required>
-                                <?php foreach ($jenis_kelamin as $u) :
+                                <?php foreach ($jenis_kelamin as $u):
                                     $id = $u["id_jenis_kelamin"];
                                     $jenis_kelamin = $u["jenis_kelamin"];
-                                ?>
+                                    ?>
                                     <option value="<?= $id ?>" <?php if ($id == $id_jenis_kelamin) {
-                                                                    echo 'selected';
-                                                                } else {
-                                                                    echo '';
-                                                                } ?>><?= $jenis_kelamin ?></option>
+                                          echo 'selected';
+                                      } else {
+                                          echo '';
+                                      } ?>><?= $jenis_kelamin ?></option>
 
                                 <?php endforeach ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="no_telp">No HP</label>
-                            <input type="text" class="form-control" id="no_telp" name="no_telp" aria-describedby="no_telp" value="<?= $no_telp ?>" required>
+                            <input type="text" class="form-control" id="no_telp" name="no_telp" aria-describedby="no_telp"
+                                value="<?= $no_telp ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nip">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip" aria-describedby="nip" value="<?= $nip ?>" required>
+                            <input type="text" class="form-control" id="nip" name="nip" aria-describedby="nip"
+                                value="<?= $nip ?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="pangkat">Department</label>
-                            <input type="text" class="form-control" id="pangkat" name="pangkat" aria-describedby="pangkat" value="<?= $pangkat ?>" required>
+                        <?php
+                        echo '<pre>';
+                        print_r($departemen); // Cek apa yang ada di $departemen
+                        echo '</pre>';
+                        ?>
+
+                            <label for="id_department">Departemen</label>
+                            <select class="form-control" id="id_department" name="id_department" required>
+                                <?php if (!empty($departemen)): // Cek jika $departemen tidak kosong ?>
+                                    <?php foreach ($departemen as $d): // Gunakan $departemen bukan $nama_departemen ?>
+                                        <?php
+                                        $id_department = $d["id_department"]; // Ambil ID departemen
+                                        $nama_departemen = $d["nama_departemen"]; // Ambil nama departemen
+                                        ?>
+                                        <option value="<?= $id_department ?>" <?= ($id_department == $id_department) ? 'selected' : ''; ?>>
+                                            <?= $nama_departemen ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php else: // Jika kosong, tampilkan pesan ?>
+                                    <option value="">Tidak ada data departemen</option>
+                                <?php endif; ?>
+                            </select>
                         </div>
+
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" name="jabatan" aria-describedby="jabatan" value="<?= $jabatan ?>" required>
+                            <input type="text" class="form-control" id="jabatan" name="jabatan" aria-describedby="jabatan"
+                                value="<?= $jabatan ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="no_telp">Alamat</label>
-                            <textarea class="form-control" id="alamat" rows="3" name="alamat" required><?= $alamat ?></textarea>
+                            <textarea class="form-control" id="alamat" rows="3" name="alamat"
+                                required><?= $alamat ?></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>

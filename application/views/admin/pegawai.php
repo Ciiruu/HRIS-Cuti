@@ -134,6 +134,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Department</th> <!-- Tambahkan header untuk departemen -->
                                                 <th>Username</th>
                                                 <th>Nama Lengkap</th>
                                                 <th>Jenis Kelamin</th>
@@ -147,19 +148,20 @@
                                             $no = 0;
                                             foreach ($pegawai as $i):
                                                 $no++;
-                                                $id_user = $i['id_user'];
-                                                $username = $i['username'];
-                                                $password = $i['password'];
-                                                $email = $i['email'];
-                                                $nama_lengkap = $i['nama_lengkap'];
-                                                $jenis_kelamin = $i['jenis_kelamin'];
-                                                $id_jenis_kelamin = $i['id_jenis_kelamin'];
-                                                $no_telp = $i['no_telp'];
-                                                $alamat = $i['alamat'];
+                                                $id_user = $i['id_user']; // Pastikan ini ada
+                                                $username = $i['username']; // Pastikan ini ada
+                                                $password = isset($i['password']) ? $i['password'] : ''; // Pastikan ini ada
+                                                $email = $i['email']; // Pastikan ini ada
+                                                $nama_lengkap = $i['nama_lengkap']; // Pastikan ini ada
+                                                $jenis_kelamin = $i['jenis_kelamin']; // Pastikan ini ada
+                                                $no_telp = $i['no_telp']; // Pastikan ini ada
+                                                $alamat = $i['alamat']; // Pastikan ini ada
+                                                $nama_department = $i['nama_department'];
 
                                                 ?>
                                                 <tr>
                                                     <td><?= $no ?></td>
+                                                    <td><?= $nama_department ?></td> <!-- Tampilkan nama departemen -->
                                                     <td><?= $username ?></td>
                                                     <td><?= $nama_lengkap ?></td>
                                                     <td><?= $jenis_kelamin ?></td>
@@ -242,6 +244,18 @@
                                                                     <input type="text" value="<?= $id_user ?>"
                                                                         name="id_user" hidden>
                                                                     <div class="form-group">
+                                                                        <label for="id_department">Departemen</label>
+                                                                        <select class="form-control" id="id_department"
+                                                                            name="id_department" required>
+                                                                            <?php foreach ($department_p as $dept): ?>
+                                                                                <option value="<?= $dept['id_department']; ?>">
+                                                                                    <?= $dept['nama_department']; ?>
+                                                                                </option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
+
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label for="username">Username</label>
                                                                         <input type="text" class="form-control"
                                                                             id="username" aria-describedby="username"
@@ -277,7 +291,7 @@
                                                                                 $id = $u["id_jenis_kelamin"];
                                                                                 $jenis_kelamin = $u["jenis_kelamin"];
                                                                                 ?>
-                                                                                <option value="<?= $id ?>" <?php if ($id == $id_jenis_kelamin) {
+                                                                                <option value="<?= $id ?>" <?php if ($id == $jenis_kelamin) {
                                                                                       echo 'selected';
                                                                                   } else {
                                                                                       echo '';
@@ -371,6 +385,15 @@
                     </div>
                     <div class="modal-body">
                         <form action="<?= base_url(); ?>Pegawai/tambah_pegawai" method="POST">
+                            <div class="form-group">
+                                <label for="id_department">Departemen</label>
+                                <select class="form-control" id="id_department" name="id_department" required>
+                                    <?php foreach ($department_p as $dept): ?>
+                                        <option value="<?= $dept['id_department']; ?>"><?= $dept['nama_department']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" id="username" aria-describedby="username"

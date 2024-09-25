@@ -43,6 +43,8 @@ class Form_Cuti extends CI_Controller
 				redirect('Form_Cuti/view_pegawai');
 			} else {
 				// Proses pengajuan cuti baru jika tidak ada cuti yang menunggu konfirmasi
+
+				$nama_staf = $this->input->post("nama_staf");
 				$alasan = $this->input->post("alasan");
 				$perihal_cuti = $this->input->post("perihal_cuti");
 				$mulai = $this->input->post("mulai");
@@ -52,7 +54,7 @@ class Form_Cuti extends CI_Controller
 				$id_status_cuti = 1; // Status menunggu konfirmasi
 
 				// Insert data cuti baru
-				$hasil = $this->m_cuti->insert_data_cuti('cuti-' . substr($id_cuti, 0, 5), $id_user, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti);
+				$hasil = $this->m_cuti->insert_data_cuti('cuti-' . substr($id_cuti, 0, 5), $id_user, $nama_staf, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti);
 
 				if ($hasil == false) {
 					$this->session->set_flashdata('eror_input', 'Terjadi kesalahan saat mengajukan cuti.');

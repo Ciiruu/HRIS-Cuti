@@ -208,7 +208,7 @@ class Cuti extends CI_Controller
 			redirect('Login/index');
 		}
 	}
-
+	
 
 	public function hapus_cuti()
 	{

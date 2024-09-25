@@ -84,6 +84,10 @@
                     <form action="<?= base_url(); ?>Form_Cuti/proses_cuti" method="POST" enctype="multipart/form-data">
                         <input type="text" value="<?= $this->session->userdata('id_user') ?>" name="id_user" hidden>
                         <div class="form-group">
+                            <label for="alasan">Nama Staf</label>
+                            <textarea class="form-control" id="nama_staf" rows="3" name="nama_staf" required></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="alasan">Alasan</label>
                             <textarea class="form-control" id="alasan" rows="3" name="alasan" required></textarea>
                         </div>

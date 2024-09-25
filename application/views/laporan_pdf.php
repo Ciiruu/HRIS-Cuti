@@ -15,7 +15,6 @@
 
         .header {
             text-align: center;
-            /* margin-bottom: auto; */
         }
 
         .section {
@@ -88,7 +87,8 @@
         $id++;
         $id_cuti = $i['id_cuti'];
         $id_user = $i['id_user'];
-        $nama_lengkap = $i['nama_lengkap'];
+        // Ganti nama_lengkap dengan nama_staf
+        $nama_lengkap = $i['nama_staf']; // Mengambil nama staf dari input
         $alasan = $i['alasan'];
         $nip = $i['nip'];
         $pangkat = $i['pangkat'];
@@ -106,8 +106,6 @@
         ?>
         <div class="header">
             <img src="<?= base_url(); ?>assets/login/images/GDHY.png" alt="Logo" height="150" width="200">
-            <!-- <h2>GRAND DIAMOND</h2>
-            <h4>HOTEL - YOGYAKARTA</h4> -->
             <h3><u>APPLICATION FOR LEAVE / ABSENCE</u></h3>
         </div>
 
@@ -141,7 +139,7 @@
                     <td>: From &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($mulai))) ?></td>
                     <td>To</td>
                     <td>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($berakhir))) ?></td>
-                    <td>(<?= $id_status_cuti ?>)days</td>
+                    <td>(<?= $days ?>) days</td>
                 </tr>
                 <tr>
                     <td>Nature of Leave</td>
@@ -154,19 +152,7 @@
                 <tr>
                     <td>Leave Address</td>
                     <td>: </td>
-
-                    <div class="section">
-                        <table class="form-table">
-                            <tr>
-                                <td style="text-align: right;">----------------------------</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: right;">Employee</td>
-                            </tr>
-                        </table>
-                    </div>
                 </tr>
-
             </table>
         </div>
 
