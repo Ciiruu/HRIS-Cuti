@@ -18,7 +18,7 @@ class Pegawai extends CI_Controller
 
 		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 3) {
 
-			$data['pegawai'] = $this->m_user->get_all_pegawai()->result_array();
+			$data['pegawai'] = $this->m_user->get_all_pegawai();
 			$data['jenis_kelamin_p'] = $this->m_jenis_kelamin->get_all_jenis_kelamin()->result_array();
 			$data['department_p'] = $this->m_department->get_all_department()->result_array(); // Ambil data departemen
 			$this->load->view('super_admin/pegawai', $data);

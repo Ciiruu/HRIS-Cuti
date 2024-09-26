@@ -123,12 +123,11 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Username</th>
+                                                <th>Department</th> <!-- Tambahkan header untuk departemen -->
                                                 <th>Nama Lengkap</th>
                                                 <th>Jenis Kelamin</th>
                                                 <th>No Telp</th>
                                                 <th>Alamat</th>
-                                                <!-- <th>Aksi</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -136,20 +135,19 @@
                                             $no = 0;
                                             foreach ($pegawai as $i) :
                                                 $no++;
-                                                $id_user = $i['id_user'];
-                                                $username = $i['username'];
-                                                $password = $i['password'];
-                                                $nama_lengkap = $i['nama_lengkap'];
-                                                $jenis_kelamin = $i['jenis_kelamin'];
-                                                $id_jenis_kelamin = $i['id_jenis_kelamin'];
-                                                $no_telp = $i['no_telp'];
-                                                $email = $i['email'];
-                                                $alamat = $i['alamat'];
+                                                $id_user = $i['id_user']; // Pastikan ini ada
+                                                $password = isset($i['password']) ? $i['password'] : ''; // Pastikan ini ada
+                                                $email = $i['email']; // Pastikan ini ada
+                                                $nama_lengkap = $i['nama_lengkap']; // Pastikan ini ada
+                                                $jenis_kelamin = $i['jenis_kelamin']; // Pastikan ini ada
+                                                $no_telp = $i['no_telp']; // Pastikan ini ada
+                                                $alamat = $i['alamat']; // Pastikan ini ada
+                                                $nama_department = $i['nama_department'];
 
                                             ?>
                                                 <tr>
                                                     <td><?= $no ?></td>
-                                                    <td><?= $username ?></td>
+                                                    <td><?= $nama_department ?></td> <!-- Tampilkan nama departemen -->
                                                     <td><?= $nama_lengkap ?></td>
                                                     <td><?= $jenis_kelamin ?></td>
                                                     <td><?= $no_telp ?></td>
