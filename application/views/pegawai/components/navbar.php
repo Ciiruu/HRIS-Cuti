@@ -55,10 +55,10 @@
                     $id_jenis_kelamin = $i['id_jenis_kelamin'];
                     $email = $i['email'];
                     $nip = $i['nip'];
-                    $id_department = $i['id_department'];
                     $jabatan = $i['jabatan'];
                     $no_telp = $i['no_telp'];
                     $alamat = $i['alamat'];
+                    $id_department = $i['id_department'];
 
                     ?>
                     <form action="<?= base_url(); ?>Settings/lengkapi_data" method="POST">
@@ -94,30 +94,26 @@
                             <input type="text" class="form-control" id="nip" name="nip" aria-describedby="nip"
                                 value="<?= $nip ?>" required>
                         </div>
-                        <div class="form-group">
-                        <?php
-                        echo '<pre>';
-                        print_r($departemen); // Cek apa yang ada di $departemen
-                        echo '</pre>';
-                        ?>
 
-                            <label for="id_department">Departemen</label>
-                            <select class="form-control" id="id_department" name="id_department" required>
-                                <?php if (!empty($departemen)): // Cek jika $departemen tidak kosong ?>
-                                    <?php foreach ($departemen as $d): // Gunakan $departemen bukan $nama_departemen ?>
-                                        <?php
-                                        $id_department = $d["id_department"]; // Ambil ID departemen
-                                        $nama_departemen = $d["nama_departemen"]; // Ambil nama departemen
-                                        ?>
-                                        <option value="<?= $id_department ?>" <?= ($id_department == $id_department) ? 'selected' : ''; ?>>
-                                            <?= $nama_departemen ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php else: // Jika kosong, tampilkan pesan ?>
-                                    <option value="">Tidak ada data departemen</option>
-                                <?php endif; ?>
+                        <div class="form-group">
+                            <label for="id_department">Department</label>
+                            <select class="form-control" id="id_department" name="id_department" disabled>
+                                <?php foreach ($department as $d):
+                                    $id = $d["id_department"];
+                                    $nama_department = $d["nama_department"];
+                                    ?>
+                                    <option value="<?= $id ?>" <?php if ($id == $id_department) {
+                                          echo 'selected';
+                                      } ?>>
+                                        <?= $nama_department ?>
+                                    </option>
+                                <?php endforeach ?>
                             </select>
+                            <input type="hidden" name="id_department" value="<?= $id_department ?>">
                         </div>
+
+
+
 
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>

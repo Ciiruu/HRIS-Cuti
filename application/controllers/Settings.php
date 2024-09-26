@@ -26,8 +26,7 @@ class Settings extends CI_Controller {
 		$data['pegawai_data'] = $this->m_user->get_pegawai_by_id($this->session->userdata('id_user'))->result_array();
 		$data['pegawai'] = $this->m_user->get_pegawai_by_id($this->session->userdata('id_user'))->row_array();
 		$data['jenis_kelamin'] = $this->m_jenis_kelamin->get_all_jenis_kelamin()->result_array();
-		$data['departement'] = $this->m_department->get_all_departemen(); // Mengambil data departemen
-
+		$data['department'] = $this->m_department->get_all_department()->result_array();
 		$this->load->view('pegawai/settings', $data);
 	}
 	
@@ -39,13 +38,14 @@ class Settings extends CI_Controller {
 		$alamat = $this->input->post("alamat");
 		$id_jenis_kelamin = $this->input->post("id_jenis_kelamin");
 		$nip = $this->input->post("nip");
-		$id_departemen = $this->input->post("id_departemen");
+		$id_department = $this->input->post("id_department"); // Ambil departemen dari input
 		$jabatan = $this->input->post("jabatan");
 
 		
+		$this->db->trans_start();
 
-		$hasil = $this->m_user->update_user_detail($id, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $nip, $id_departemen, $jabatan);
-
+		$hasil = $this->m_user->update_user_detail($id, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $nip, $id_department, $jabatan);
+		$this->db->trans_complete();
         if($hasil==false){
             $this->session->set_flashdata('eror','eror');
             redirect('Settings/view_pegawai');

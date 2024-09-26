@@ -133,24 +133,20 @@ public function insert_pegawai($id, $username, $email, $password, $id_user_level
 
 public function update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
 {
-    // Hapus cache query
-    $this->db->flush_cache();
-    
     $this->db->trans_start();
 
-
     // Update user
-    $this->db->where('id_user', $id);
+    $this->db->where('id_user', $id); // Pastikan $id adalah id_user
     $this->db->update('user', [
         'username' => $username,
         'password' => $password,
         'email' => $email,
         'id_user_level' => $id_user_level,
-        'id_department' => $id_department,
+        'id_department' => $id_department, // Update id_department jika diperlukan
     ]);
 
     // Update user_detail
-    $this->db->where('id_user_detail', $id);
+    $this->db->where('id_user_detail', $id); // Pastikan $id adalah id_user_detail
     $this->db->update('user_detail', [
         'nama_lengkap' => $nama_lengkap,
         'id_jenis_kelamin' => $id_jenis_kelamin,
@@ -163,6 +159,7 @@ public function update_pegawai($id, $username, $email, $password, $id_user_level
 
     return $this->db->trans_status();
 }
+
 
 
     public function delete_pegawai($id)
