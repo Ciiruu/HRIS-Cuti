@@ -301,4 +301,32 @@ class Cuti extends CI_Controller
 		redirect('Cuti/view_super_admin/' . $id_user);
 	}
 
+
+	public function update_total_cuti() {
+		// Ambil total_cuti dari form
+		$total_cuti = $this->input->post('total_cuti');
+		$id_user = $this->input->post('id_user');
+	
+		// Ambil data pegawai untuk memeriksa total_cuti
+		$pegawai = $this->m_user->get_pegawai_by_id($id_user)->row_array();
+	
+		// Cek apakah total_cuti saat ini sudah ada dan tidak sama dengan 0
+		if ($pegawai['total_cuti'] > 0) {
+			// Set flashdata untuk pesan error jika total_cuti tidak sama dengan 0
+			$this->session->set_flashdata('error_message', 'Total cuti sudah diisi. Tidak bisa mengubah total cuti.');
+		} else {
+			// Lanjutkan untuk mengupdate total_cuti
+			if ($this->m_user->update_total_cuti($id_user, $total_cuti)) {
+				$this->session->set_flashdata('success_message', 'Total cuti berhasil diupdate.');
+			} else {
+				$this->session->set_flashdata('error_message', 'Terjadi kesalahan saat memperbarui total cuti.');
+			}
+		}
+	
+		// Redirect kembali ke halaman pegawai/dashboard
+		redirect('Dashboard/dashboard_pegawai'); // Ganti dengan URL yang sesuai
+	}
+	
+	
+
 }

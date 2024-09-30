@@ -27,7 +27,7 @@ class Form_Cuti extends CI_Controller
 		}
 	}
 
-	// Proses pengajuan cuti baru dengan pengecekan cuti menunggu konfirmasi
+	// Proses pengajuan cuti baru dengan pengecekan cuti menunggu konfirmasi dan pengurangan total cuti
 	public function proses_cuti()
 	{
 		if ($this->session->userdata('logged_in') == true && $this->session->userdata('id_user_level') == 1) {
@@ -51,6 +51,27 @@ class Form_Cuti extends CI_Controller
 				$id_cuti = md5($id_user . $alasan . $mulai);
 				$id_status_cuti = 1; // Status menunggu konfirmasi
 
+				// Menghitung selisih hari antara tanggal mulai dan berakhir
+				$datetime1 = new DateTime($mulai);
+				$datetime2 = new DateTime($berakhir);
+				$interval = $datetime1->diff($datetime2);
+				$jumlah_hari_cuti = $interval->days + 1; // Tambahkan 1 hari untuk menghitung dari mulai hingga berakhir
+
+				// Ambil total cuti saat ini dari user_detail
+				$total_cuti = $this->m_user->get_total_cuti_by_user($id_user)['total_cuti'];
+
+				// Kurangi total cuti dengan jumlah hari cuti yang diajukan
+				if ($total_cuti < $jumlah_hari_cuti) {
+					// Jika cuti yang diajukan lebih besar dari sisa cuti, tampilkan pesan error
+					$this->session->set_flashdata('error_cuti', 'Cuti yang diajukan melebihi sisa cuti Anda.');
+					redirect('Form_Cuti/view_pegawai');
+					return;
+				}
+				$total_cuti_baru = $total_cuti - $jumlah_hari_cuti;
+
+				// Update total cuti di tabel user_detail
+				$this->m_user->update_total_cuti($id_user, $total_cuti_baru);
+
 				// Insert data cuti baru
 				$hasil = $this->m_cuti->insert_data_cuti('cuti-' . substr($id_cuti, 0, 5), $id_user, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti);
 
@@ -67,6 +88,6 @@ class Form_Cuti extends CI_Controller
 			redirect('Login/index');
 		}
 	}
-
+	
 
 }

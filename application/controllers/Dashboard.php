@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -13,27 +14,27 @@ class Dashboard extends CI_Controller {
 
 	public function dashboard_super_admin()
 	{
-	if ($this->session->userdata('logged_in') == true AND $this->session->userdata('id_user_level') == 3) {
+		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 3) {
 
-		$data['cuti'] = $this->m_cuti->count_all_cuti()->row_array();
-		$data['cuti_acc'] = $this->m_cuti->count_all_cuti_acc()->row_array();
-		$data['cuti_confirm'] = $this->m_cuti->count_all_cuti_confirm()->row_array();
-		$data['cuti_reject'] = $this->m_cuti->count_all_cuti_reject()->row_array();
-		$data['pegawai'] = $this->m_user->count_all_pegawai()->row_array();
-		$data['admin'] = $this->m_user->count_all_admin()->row_array();
-		$this->load->view('super_admin/dashboard', $data);
+			$data['cuti'] = $this->m_cuti->count_all_cuti()->row_array();
+			$data['cuti_acc'] = $this->m_cuti->count_all_cuti_acc()->row_array();
+			$data['cuti_confirm'] = $this->m_cuti->count_all_cuti_confirm()->row_array();
+			$data['cuti_reject'] = $this->m_cuti->count_all_cuti_reject()->row_array();
+			$data['pegawai'] = $this->m_user->count_all_pegawai()->row_array();
+			$data['admin'] = $this->m_user->count_all_admin()->row_array();
+			$this->load->view('super_admin/dashboard', $data);
 
-	}else{
+		} else {
 
-		$this->session->set_flashdata('loggin_err','loggin_err');
-		redirect('Login/index');
+			$this->session->set_flashdata('loggin_err', 'loggin_err');
+			redirect('Login/index');
 
-	}
+		}
 	}
 
 	public function dashboard_admin()
 	{
-		if ($this->session->userdata('logged_in') == true AND $this->session->userdata('id_user_level') == 2) {
+		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 2) {
 			$data['cuti'] = $this->m_cuti->count_all_cuti()->row_array();
 			$data['cuti_acc'] = $this->m_cuti->count_all_cuti_acc()->row_array();
 			$data['cuti_confirm'] = $this->m_cuti->count_all_cuti_confirm()->row_array();
@@ -41,17 +42,17 @@ class Dashboard extends CI_Controller {
 			$data['pegawai'] = $this->m_user->count_all_pegawai()->row_array();
 			$this->load->view('admin/dashboard', $data);
 
-		}else{
+		} else {
 
-			$this->session->set_flashdata('loggin_err','loggin_err');
+			$this->session->set_flashdata('loggin_err', 'loggin_err');
 			redirect('Login/index');
-	
+
 		}
 	}
-	
+
 	public function dashboard_pegawai()
 	{
-		if ($this->session->userdata('logged_in') == true AND $this->session->userdata('id_user_level') == 1) {
+		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 1) {
 
 			$data['cuti_pegawai'] = $this->m_cuti->get_all_cuti_first_by_id_user($this->session->userdata('id_user'))->result_array();
 			$data['cuti'] = $this->m_cuti->count_all_cuti_by_id($this->session->userdata('id_user'))->row_array();
@@ -61,16 +62,26 @@ class Dashboard extends CI_Controller {
 			$data['pegawai'] = $this->m_user->get_pegawai_by_id($this->session->userdata('id_user'))->row_array();
 			$data['jenis_kelamin'] = $this->m_jenis_kelamin->get_all_jenis_kelamin()->result_array();
 			$data['pegawai_data'] = $this->m_user->get_pegawai_by_id($this->session->userdata('id_user'))->result_array();
+			// Ambil total cuti dari model
+			$data['total'] = $this->m_user->get_total_cuti_by_user($this->session->userdata('id_user'));
+
+			// Pastikan total_cuti ada, jika tidak tetapkan default 12
+			if (isset($data['total']['total_cuti'])) {
+				$data['total_cuti'] = $data['total']['total_cuti'];
+			} else {
+				$data['total_cuti'] = 12; // Default jika tidak ada
+			}
+
 			// echo var_dump($data);
 			// die();
 			$this->load->view('pegawai/dashboard', $data);
 
-		}else{
+		} else {
 
-			$this->session->set_flashdata('loggin_err','loggin_err');
+			$this->session->set_flashdata('loggin_err', 'loggin_err');
 			redirect('Login/index');
 
 		}
-    }
-    
+	}
+
 }

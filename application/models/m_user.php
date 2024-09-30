@@ -4,8 +4,8 @@ class M_user extends CI_Model
 {
 
     public function get_all_pegawai()
-{
-    $hasil = $this->db->query('
+    {
+        $hasil = $this->db->query('
         SELECT user.*, user_detail.*, jenis_kelamin.jenis_kelamin, department.nama_department
         FROM user 
         JOIN user_detail ON user.id_user_detail = user_detail.id_user_detail 
@@ -14,11 +14,11 @@ class M_user extends CI_Model
         WHERE user.id_user_level = 1 
         ORDER BY user.username ASC
     ');
-    
-    return $hasil->result_array(); // Kembalikan hasil sebagai array
-}
 
-    
+        return $hasil->result_array(); // Kembalikan hasil sebagai array
+    }
+
+
     // public function get_all_pegawai()
     // {
     //     $this->db->select('u.id_user, u.username, d.nama_departemen'); // Ambil nama departemen
@@ -27,7 +27,7 @@ class M_user extends CI_Model
     //     $query = $this->db->get();
     //     return $query->result_array(); // Pastikan hasilnya berupa array
     // }
-    
+
 
     public function count_all_pegawai()
     {
@@ -81,84 +81,84 @@ class M_user extends CI_Model
     }
 
     public function update_user_detail($id, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $nip, $id_department, $jabatan)
-{
-    $this->db->trans_start();
+    {
+        $this->db->trans_start();
 
-    $data = [
-        'nama_lengkap' => $nama_lengkap,
-        'id_jenis_kelamin' => $id_jenis_kelamin,
-        'no_telp' => $no_telp,
-        'alamat' => $alamat,
-        'nip' => $nip,
-        'id_department' => $id_department, // Perbaiki nama kolom jika diperlukan
-        'jabatan' => $jabatan,
-    ];
+        $data = [
+            'nama_lengkap' => $nama_lengkap,
+            'id_jenis_kelamin' => $id_jenis_kelamin,
+            'no_telp' => $no_telp,
+            'alamat' => $alamat,
+            'nip' => $nip,
+            'id_department' => $id_department, // Perbaiki nama kolom jika diperlukan
+            'jabatan' => $jabatan,
+        ];
 
-    $this->db->where('id_user_detail', $id);
-    $this->db->update('user_detail', $data);
+        $this->db->where('id_user_detail', $id);
+        $this->db->update('user_detail', $data);
 
-    $this->db->trans_complete();
-    return $this->db->trans_status();
-}
+        $this->db->trans_complete();
+        return $this->db->trans_status();
+    }
 
-public function insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
-{
-    $this->db->trans_start();
+    public function insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
+    {
+        $this->db->trans_start();
 
-    // Insert into user
-    $this->db->insert('user', [
-        'id_user' => $id,
-        'username' => $username,
-        'password' => $password,
-        'email' => $email,
-        'id_user_level' => $id_user_level,
-        'id_user_detail' => $id,
-        'id_department' => $id_department,
-    ]);
+        // Insert into user
+        $this->db->insert('user', [
+            'id_user' => $id,
+            'username' => $username,
+            'password' => $password,
+            'email' => $email,
+            'id_user_level' => $id_user_level,
+            'id_user_detail' => $id,
+            'id_department' => $id_department,
+        ]);
 
-    // Insert into user_detail
-    $this->db->insert('user_detail', [
-        'id_user_detail' => $id,
-        'nama_lengkap' => $nama_lengkap,
-        'id_jenis_kelamin' => $id_jenis_kelamin,
-        'no_telp' => $no_telp,
-        'alamat' => $alamat,
-        'id_department' => $id_department, // Pastikan nama kolom ini benar
-    ]);
+        // Insert into user_detail
+        $this->db->insert('user_detail', [
+            'id_user_detail' => $id,
+            'nama_lengkap' => $nama_lengkap,
+            'id_jenis_kelamin' => $id_jenis_kelamin,
+            'no_telp' => $no_telp,
+            'alamat' => $alamat,
+            'id_department' => $id_department, // Pastikan nama kolom ini benar
+        ]);
 
-    $this->db->trans_complete();
+        $this->db->trans_complete();
 
-    return $this->db->trans_status();
-}
+        return $this->db->trans_status();
+    }
 
-public function update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
-{
-    $this->db->trans_start();
+    public function update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
+    {
+        $this->db->trans_start();
 
-    // Update user
-    $this->db->where('id_user', $id); // Pastikan $id adalah id_user
-    $this->db->update('user', [
-        'username' => $username,
-        'password' => $password,
-        'email' => $email,
-        'id_user_level' => $id_user_level,
-        'id_department' => $id_department, // Update id_department jika diperlukan
-    ]);
+        // Update user
+        $this->db->where('id_user', $id); // Pastikan $id adalah id_user
+        $this->db->update('user', [
+            'username' => $username,
+            'password' => $password,
+            'email' => $email,
+            'id_user_level' => $id_user_level,
+            'id_department' => $id_department, // Update id_department jika diperlukan
+        ]);
 
-    // Update user_detail
-    $this->db->where('id_user_detail', $id); // Pastikan $id adalah id_user_detail
-    $this->db->update('user_detail', [
-        'nama_lengkap' => $nama_lengkap,
-        'id_jenis_kelamin' => $id_jenis_kelamin,
-        'no_telp' => $no_telp,
-        'alamat' => $alamat,
-        'id_department' => $id_department, // Pastikan nama kolom ini benar
-    ]);
+        // Update user_detail
+        $this->db->where('id_user_detail', $id); // Pastikan $id adalah id_user_detail
+        $this->db->update('user_detail', [
+            'nama_lengkap' => $nama_lengkap,
+            'id_jenis_kelamin' => $id_jenis_kelamin,
+            'no_telp' => $no_telp,
+            'alamat' => $alamat,
+            'id_department' => $id_department, // Pastikan nama kolom ini benar
+        ]);
 
-    $this->db->trans_complete();
+        $this->db->trans_complete();
 
-    return $this->db->trans_status();
-}
+        return $this->db->trans_status();
+    }
 
 
 
@@ -204,5 +204,38 @@ public function update_pegawai($id, $username, $email, $password, $id_user_level
         else
             return false;
     }
+
+    public function get_total_cuti_by_user($id_user)
+    {
+        $this->db->select('total_cuti');
+        $this->db->from('user_detail');
+        // Gunakan kolom yang benar untuk menghubungkan user_detail dengan user
+        $this->db->where('id_user_detail', $id_user); // Sesuaikan dengan kolom penghubung
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return ['total_cuti' => 0]; // Nilai default jika tidak ada record
+        }
+    }
+    // Memperbarui total cuti di tabel user_detail berdasarkan id_user_detail
+    public function update_total_cuti($id_user_detail, $total_cuti)
+    {
+        // Gunakan kolom 'id_user_detail' sesuai dengan yang ada di tabel user_detail
+        $this->db->where('id_user_detail', $id_user_detail); // Ubah dari id_user ke id_user_detail
+        $this->db->update('user_detail', array('total_cuti' => $total_cuti));
+    }
+
+    // Model M_user.php
+    // public function reduce_total_cuti($id_user, $jumlah_hari)
+    // {
+    //     $this->db->set('total_cuti', 'total_cuti - ' . (int)$jumlah_hari, FALSE); // Mengurangi total_cuti
+    //     $this->db->where('id_user', $id_user);
+    //     return $this->db->update('user_detail'); // Gantilah dengan nama tabel yang sesuai
+    // }
+
+
+
 
 }

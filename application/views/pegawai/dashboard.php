@@ -25,6 +25,30 @@
             });
         </script>
     <?php } ?>
+
+    <!-- notif cuti -->
+
+    <?php if ($this->session->flashdata('success_message')): ?>
+        <script>
+            swal({
+                title: "Success!",
+                text: "Total cuti telah ditambahkan",
+                icon: "success",
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('error_message')): ?>
+        <script>
+            swal({
+                title: "Error!",
+                text: "Cuti Sudah Tersedia",
+                icon: "error",
+
+            });
+        </script>
+    <?php endif; ?>
+
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -62,6 +86,78 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-secondary">
+                                <div class="inner">
+                                    <h3>
+                                        <?php
+                                        // Cek apakah data total_cuti sudah didefinisikan dan valid
+                                        if (isset($total_cuti)) {
+                                            // Tampilkan total cuti jika ada
+                                            if ($total_cuti > 0) {
+                                                echo 'Total Cuti: ' . $total_cuti . ' Hari';
+                                            } else {
+                                                echo 'Tolong Input';
+                                            }
+                                        } else {
+                                            // Jika data cuti pegawai tidak ada atau belum diatur
+                                            echo 'Tolong Input';
+                                        }
+                                        ?>
+                                    </h3>
+                                    <p>Total Cuti</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer btn btn-primary" data-toggle="modal"
+                                    data-target="#totalCutiModal">Input Total Cuti <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="totalCutiModal" tabindex="-1" role="dialog"
+                            aria-labelledby="totalCutiModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="totalCutiModalLabel">Isi Total Cuti</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?php if (isset($total_cuti) && $total_cuti > 0): ?>
+                                            <p>Total cuti sudah diisi: <?php echo $total_cuti; ?> Hari. Anda tidak bisa
+                                                mengubahnya.</p>
+                                        <?php else: ?>
+                                            <form id="form-total-cuti"
+                                                action="<?php echo site_url('cuti/update_total_cuti'); ?>" method="post">
+                                                <div class="form-group">
+                                                    <label for="total_cuti">Total Cuti</label>
+                                                    <input type="number" class="form-control" id="total_cuti"
+                                                        name="total_cuti" required min="0" max="365">
+                                                </div>
+                                                <input type="hidden" name="id_user"
+                                                    value="<?= $this->session->userdata('id_user'); ?>">
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <?php if (!isset($total_cuti) || $total_cuti == 0): ?>
+                                            <button type="submit" form="form-total-cuti"
+                                                class="btn btn-primary">Simpan</button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box bg-info">
@@ -169,7 +265,6 @@
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -182,7 +277,8 @@
                                     <!-- <h5 class="card-title">Syarat Pengambilan Cuti/Libur</h5> -->
                                     <p class="card-text">
                                         1. <b>Batas Waktu Pengajuan Cuti:</b><br>
-                                        Pengajuan cuti harus dilakukan <b>maksimal 1 Minggu sebelum tanggal libur</b> yang
+                                        Pengajuan cuti harus dilakukan <b>maksimal 1 Minggu sebelum tanggal libur</b>
+                                        yang
                                         diinginkan. Jika pengajuan dilakukan setelah batas waktu ini, cuti tidak dapat
                                         diproses.<br><br>
 
