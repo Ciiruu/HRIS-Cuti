@@ -2,6 +2,13 @@
 
 class M_cuti extends CI_Model
 {
+    public function get_cuti_by_id($id_cuti)
+    {
+        $this->db->where('id_cuti', $id_cuti);
+        $query = $this->db->get('cuti');
+        return $query;
+    }
+
     public function cekCutiMenunggu($id_user)
     {
         $this->db->where('id_user', $id_user);
@@ -140,6 +147,12 @@ class M_cuti extends CI_Model
         else
             return false;
     }
+    public function update_status_cuti($id_cuti, $status_baru)
+    {
+        $this->db->where('id_cuti', $id_cuti);
+        $this->db->update('cuti', array('id_status_cuti' => $status_baru));
+    }
+
 
     public function confirm_cuti($id_cuti, $id_status_cuti, $alasan_verifikasi)
     {

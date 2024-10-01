@@ -32,7 +32,7 @@
         <script>
             swal({
                 title: "Success!",
-                text: "Total cuti telah ditambahkan",
+                text: "<?php echo $this->session->flashdata('success_message'); ?>",
                 icon: "success",
             });
         </script>
@@ -42,12 +42,12 @@
         <script>
             swal({
                 title: "Error!",
-                text: "Cuti Sudah Tersedia",
+                text: "<?php echo $this->session->flashdata('error_message'); ?>",
                 icon: "error",
-
             });
         </script>
     <?php endif; ?>
+
 
     <div class="wrapper">
 
@@ -111,8 +111,9 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer btn btn-primary" data-toggle="modal"
-                                    data-target="#totalCutiModal">Input Total Cuti <i class="fas fa-arrow-circle-right"></i>
+                                <a href="#" class="small-box-footer btn btn-secondary" data-toggle="modal"
+                                    data-target="#totalCutiModal">Input Total Cuti <i
+                                        class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -136,7 +137,7 @@
                                             <form id="form-total-cuti"
                                                 action="<?php echo site_url('cuti/update_total_cuti'); ?>" method="post">
                                                 <div class="form-group">
-                                                    <label for="total_cuti">Total Cuti</label>
+                                                    <label for="total_cuti">Total Cuti Anda</label>
                                                     <input type="number" class="form-control" id="total_cuti"
                                                         name="total_cuti" required min="0" max="365">
                                                 </div>
@@ -146,16 +147,16 @@
                                         <?php endif; ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         <?php if (!isset($total_cuti) || $total_cuti == 0): ?>
                                             <button type="submit" form="form-total-cuti"
-                                                class="btn btn-primary">Simpan</button>
+                                                class="btn btn-success">Simpan</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
 
                         <div class="col-lg-3 col-6">
@@ -167,7 +168,7 @@
                                     <p>Semua Pengajuan Cuti/Absen</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                    <i class="ion-document-text"></i>
                                 </div>
                                 <a href="<?= base_url(); ?>Cuti/view_pegawai/<?= $this->session->userdata('id_user'); ?>"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -183,7 +184,7 @@
                                     <p>Pengajuan Cuti/Absen Diterima</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
+                                    <i class="ion-arrow-graph-up-right"></i>
                                 </div>
                                 <a href="<?= base_url(); ?>Cuti/view_pegawai_accepted_cuti/<?= $this->session->userdata('id_user'); ?>"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -199,7 +200,7 @@
                                     <p>Pengajuan Cuti/Absen Ditolak</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="ion-arrow-graph-down-right"></i>
                                 </div>
                                 <a href="<?= base_url(); ?>Cuti/view_pegawai_reject_cuti/<?= $this->session->userdata('id_user'); ?>"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -215,7 +216,7 @@
                                     <p>Menunggu Cuti/Absen DiKonfirmasi</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="ion-load-d"></i>
                                 </div>
                                 <a href="<?= base_url(); ?>Cuti/view_pegawai_waiting_cuti/<?= $this->session->userdata('id_user'); ?>"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -223,7 +224,7 @@
                         </div>
                         <div class="col-lg-3 col-6">
                             <!-- small box -->
-                            <div class="small-box bg-warning">
+                            <div class="small-box" style="background-color: #48bb78;">
                                 <div class="inner">
                                     <h3><?php
                                     // echo var_dump($cuti_pegawai[0]['mulai']);
@@ -259,7 +260,7 @@
                                     <p>Sisa Waktu Cuti/Absen</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="ion-clock"></i>
                                 </div>
                                 <a href="<?= base_url(); ?>Cuti/view_pegawai_accepted_cuti/<?= $this->session->userdata('id_user'); ?>"
                                     class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>

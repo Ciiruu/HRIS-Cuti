@@ -220,12 +220,16 @@ class M_user extends CI_Model
         }
     }
     // Memperbarui total cuti di tabel user_detail berdasarkan id_user_detail
-    public function update_total_cuti($id_user_detail, $total_cuti)
-    {
-        // Gunakan kolom 'id_user_detail' sesuai dengan yang ada di tabel user_detail
-        $this->db->where('id_user_detail', $id_user_detail); // Ubah dari id_user ke id_user_detail
-        $this->db->update('user_detail', array('total_cuti' => $total_cuti));
+    public function update_total_cuti($id_user, $total_cuti) {
+        // Update query
+        $this->db->set('total_cuti', $total_cuti);
+        $this->db->where('id_user_detail', $id_user); // Pastikan tidak ada tanda kurung
+        return $this->db->update('user_detail'); // Pastikan nama tabel yang benar
     }
+    
+    
+
+
 
     // Model M_user.php
     // public function reduce_total_cuti($id_user, $jumlah_hari)
