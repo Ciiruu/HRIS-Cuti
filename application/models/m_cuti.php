@@ -2,6 +2,17 @@
 
 class M_cuti extends CI_Model
 {
+        public function get_jumlah_hari_cuti($id_cuti)
+        {
+            $this->db->select("DATEDIFF(berakhir, mulai) AS jumlah_hari_cuti");
+            $this->db->from("cuti");
+            $this->db->where("id_cuti", $id_cuti);
+            $query = $this->db->get();
+    
+            return $query->row_array(); // Mengembalikan hasil sebagai array
+        }
+    
+    
     public function get_cuti_by_id($id_cuti)
     {
         $this->db->where('id_cuti', $id_cuti);

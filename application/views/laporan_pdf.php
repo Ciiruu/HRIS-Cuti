@@ -87,8 +87,7 @@
         $id++;
         $id_cuti = $i['id_cuti'];
         $id_user = $i['id_user'];
-        // Ganti nama_lengkap dengan nama_staf
-        $nama_lengkap = $i['nama_staf']; // Mengambil nama staf dari input
+        $nama_lengkap = $i['nama_lengkap'];
         $alasan = $i['alasan'];
         $nip = $i['nip'];
         $pangkat = $i['pangkat'];
@@ -98,12 +97,22 @@
         $mulai = $i['mulai'];
         $berakhir = $i['berakhir'];
         $id_status_cuti = $i['id_status_cuti'];
+        $total_cuti = $i['total_cuti'];
 
-        $diff = abs(strtotime($mulai) - strtotime($berakhir));
-        $years = floor($diff / (365 * 60 * 60 * 24));
-        $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-        $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-        ?>
+        // Hitung jumlah hari cuti diambil
+        $cuti_diambil_query = $this->db->query("SELECT DATEDIFF(berakhir, mulai) + 1 AS jumlah_hari_cuti FROM cuti WHERE id_cuti = '$id_cuti'");
+        $cuti_diambil = $cuti_diambil_query->row()->jumlah_hari_cuti;
+
+        // Hitung total cuti yang disetujui oleh Super Admin
+        $total_cuti_disetujui_query = $this->db->query("
+            SELECT SUM(DATEDIFF(berakhir, mulai) + 1) AS total_disetujui 
+            FROM cuti 
+            WHERE id_user = '$id_user' AND id_status_cuti = 2"); // 2 berarti disetujui
+        $total_cuti_disetujui = $total_cuti_disetujui_query->row()->total_disetujui;
+
+        // Hitung Balance Due
+        $balance_due = $total_cuti - $total_cuti_disetujui; // Total cuti - total cuti yang diambil
+    ?>
         <div class="header">
             <img src="<?= base_url(); ?>assets/login/images/GDHY.png" alt="Logo" height="150" width="200">
             <h3><u>APPLICATION FOR LEAVE / ABSENCE</u></h3>
@@ -117,7 +126,7 @@
                     <td>Name</td>
                     <td>: <?= $nama_lengkap ?></td>
                     <td>ID No</td>
-                    <td>: </td>
+                    <td>: <?= $nip ?></td>
                 </tr>
                 <tr>
                     <td>Position / Department</td>
@@ -125,7 +134,7 @@
                 </tr>
                 <tr>
                     <td>Commencement Date</td>
-                    <td>: <?= date('d-m-Y', strtotime(tgl_indo($mulai))) ?></td>
+                    <td>: <?= date('d-m-Y', strtotime(($tgl_diajukan))) ?></td>
                 </tr>
             </table>
         </div>
@@ -136,10 +145,14 @@
             <table class="form-table">
                 <tr>
                     <td>Period of Leave</td>
-                    <td>: From &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($mulai))) ?></td>
+                    <td>: From
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(($mulai))) ?>
+                    </td>
                     <td>To</td>
-                    <td>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(tgl_indo($berakhir))) ?></td>
-                    <td>(<?= $days ?>) days</td>
+                    <td>:
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= date('d-m-Y', strtotime(($berakhir))) ?>
+                    </td>
+                    <td>(<?= $cuti_diambil ?>) days</td>
                 </tr>
                 <tr>
                     <td>Nature of Leave</td>
@@ -167,7 +180,7 @@
                     <td>: ........................................</td>
                     <td>to</td>
                     <td>: ........................................</td>
-                    <td>()days</td>
+                    <td>() days</td>
                 </tr>
                 <tr>
                     <td>To report for Duty on</td>
@@ -198,26 +211,23 @@
             <table class="form-table">
                 <tr>
                     <td>Leave Entitlement</td>
-                    <td>: </td>
+                    <td>: <?= $total_cuti ?> days</td> <!-- Total cuti sebelum di ACC -->
                 </tr>
                 <tr>
                     <td>Leave Taken</td>
-                    <td>: </td>
+                    <td>: <?= $cuti_diambil ?> days</td> <!-- Cuti yang diambil -->
                 </tr>
                 <tr>
                     <td>Balance Due</td>
-                    <td>: </td>
+                    <td>: <?= $balance_due ?> days</td> <!-- Total cuti yang disetujui -->
                 </tr>
             </table>
         </div>
+
         <br>
 
         <div class="section">
             <table class="form-table">
-                <tr>
-                    <td></td>
-                    <td style="text-align: right;"></td>
-                </tr>
                 <tr>
                     <td>----------------------------</td>
                     <td style="text-align: right;">----------------------------</td>
