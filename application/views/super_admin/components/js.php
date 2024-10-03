@@ -27,7 +27,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?= base_url();?>assets/admin_lte/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="<?= base_url();?>assets/admin_lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
+<!-- AdminLT    E App -->
 <script src="<?= base_url();?>assets/admin_lte/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url();?>assets/admin_lte/dist/js/demo.js"></script>

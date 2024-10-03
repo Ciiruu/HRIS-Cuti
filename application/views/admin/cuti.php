@@ -120,6 +120,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Lengkap</th>
+                                                <th>Total Cuti</th> <!-- Tambahkan header Total Cuti -->
                                                 <th>Alasan</th>
                                                 <th>Tanggal Diajukan</th>
                                                 <th>Tanggal Mulai</th>
@@ -139,6 +140,7 @@
                                                 $id_cuti = $i['id_cuti'];
                                                 $id_user = $i['id_user'];
                                                 $nama_lengkap = $i['nama_lengkap'];
+                                                $total_cuti = $i['total_cuti'];
                                                 $alasan = $i['alasan'];
                                                 $tgl_diajukan = $i['tgl_diajukan'];
                                                 $mulai = $i['mulai'];
@@ -150,6 +152,7 @@
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $nama_lengkap ?></td>
+                                                    <td><?= $total_cuti ?> Hari</td>
                                                     <td><?= $alasan ?></td>
                                                     <td><?= date('d-M-Y', strtotime($tgl_diajukan)) ?></td>
                                                     <td><?= date('d-M-Y', strtotime($mulai)) ?></td>

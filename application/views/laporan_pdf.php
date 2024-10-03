@@ -211,7 +211,7 @@
             <table class="form-table">
                 <tr>
                     <td>Leave Entitlement</td>
-                    <td>: <?= $total_cuti ?> days</td> <!-- Total cuti sebelum di ACC -->
+                    <td>:  </td> <!-- Total cuti sebelum di ACC -->
                 </tr>
                 <tr>
                     <td>Leave Taken</td>
@@ -219,7 +219,7 @@
                 </tr>
                 <tr>
                     <td>Balance Due</td>
-                    <td>: <?= $balance_due ?> days</td> <!-- Total cuti yang disetujui -->
+                    <td>: <?= $total_cuti ?> days</td> <!-- Total cuti yang disetujui -->
                 </tr>
             </table>
         </div>

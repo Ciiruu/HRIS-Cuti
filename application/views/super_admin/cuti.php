@@ -72,18 +72,19 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example1" class="table mb-0 table-borderless table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Lengkap</th>
+                                                <th>Nama</th>
+                                                <th>Total Cuti</th> <!-- Tambahkan header Total Cuti -->
                                                 <th>Alasan</th>
-                                                <th>Tanggal Diajukan</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Berakhir</th>
-                                                <th>Perihal Pengajuan</th>
-                                                <th>Alasan Verifikasi</th>
-                                                <th>Status Pengajuan</th>
+                                                <th>Diajukan</th>
+                                                <th>Mulai</th>
+                                                <th>Berakhir</th>
+                                                <th>Perihal</th>
+                                                <th>Verifikasi</th>
+                                                <th>Status</th>
                                                 <!-- <th>Cetak Surat</th> -->
                                                 <th>Aksi</th>
                                             </tr>
@@ -97,6 +98,7 @@
                                                 $id_cuti = $i['id_cuti'];
                                                 $id_user = $i['id_user'];
                                                 $nama_lengkap = $i['nama_lengkap'];
+                                                $total_cuti = $i['total_cuti'];
                                                 $alasan = $i['alasan'];
                                                 $tgl_diajukan = $i['tgl_diajukan'];
                                                 $mulai = $i['mulai'];
@@ -109,10 +111,11 @@
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $nama_lengkap ?></td>
+                                                    <td><?= $total_cuti ?> Hari</td>
                                                     <td><?= $alasan ?></td>
-                                                    <td><?= date('d-M-Y', strtotime( $tgl_diajukan)) ?></td>
-                                                    <td><?= date('d-M-Y', strtotime($mulai ))?></td>
-                                                    <td><?= date('d-M-Y', strtotime($berakhir ))?></td>
+                                                    <td><?= date('d-M-Y', strtotime($tgl_diajukan)) ?></td>
+                                                    <td><?= date('d-M-Y', strtotime($mulai)) ?></td>
+                                                    <td><?= date('d-M-Y', strtotime($berakhir)) ?></td>
                                                     <td><?= $perihal_cuti ?></td>
                                                     <td><?php if ($alasan_verifikasi == NULL) { ?>
                                                             <a href="" class="btn btn-warning">
@@ -125,27 +128,27 @@
                                                     <td><?php if ($id_status_cuti == 1) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-warning" data-toggle="modal"
+                                                                    <a href="" class="badge bg-warning" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Menunggu Cuti/Absen DiKonfirmasi
+                                                                        Menunggu
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 2) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-success" data-toggle="modal"
+                                                                    <a href="" class="badge bg-success" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Diterima
+                                                                        Diterima
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 3) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-danger" data-toggle="modal"
+                                                                    <a href="" class="badge bg-danger" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Ditolak
+                                                                        Ditolak
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -163,69 +166,57 @@
                                                         <?php } ?>
                                                     </td> -->
                                                     <td>
-                                                        <div class="table-responsive">
-                                                            <div class="table table-striped table-hover ">
-                                                                <a href="" class="btn btn-success" data-toggle="modal"
-                                                                    data-target="#setuju<?= $id_cuti ?>">
-                                                                    <i class="fas fa-check"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-responsive">
-                                                            <div class="table table-striped table-hover ">
-                                                                <a href="" data-toggle="modal"
-                                                                    data-target="#tidak_setuju<?= $id_cuti ?>"
-                                                                    class="btn btn-danger"><i class="fas fa-times"></i>
-                                                                </a>
-                                                            </div>
+                                                        <div>
+                                                            <a href="" class="btn btn-success" data-toggle="modal"
+                                                                data-target="#setuju<?= $id_cuti ?>">
+                                                                <i class="fas fa-check"></i>
+                                                            </a>
+                                                            <a href="" class="btn btn-danger" data-toggle="modal"
+                                                                data-target="#tidak_setuju<?= $id_cuti ?>">
+                                                                <i class="fas fa-times"></i>
+                                                            </a>
                                                         </div>
                                                     </td>
+
 
                                                 </tr>
 
                                                 <!-- Modal Setuju Cuti -->
                                                 <div class="modal fade" id="setuju<?= $id_cuti ?>" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                    aria-labelledby="modalLabelSetuju" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Setujui
-                                                                    Pengajuan Cuti/Absen
-                                                                </h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
+                                                            <div class="modal-header bg-success text-white">
+                                                                <h5 class="modal-title" id="modalLabelSetuju">Konfirmasi
+                                                                    Persetujuan Cuti</h5>
+                                                                <button type="button" class="close text-white"
+                                                                    data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-
                                                             <div class="modal-body">
                                                                 <form
                                                                     action="<?php echo base_url() ?>Cuti/acc_cuti_super_admin/2"
                                                                     method="post" enctype="multipart/form-data">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <input type="hidden" name="id_cuti"
-                                                                                value="<?php echo $id_cuti ?>" />
-                                                                            <input type="hidden" name="id_user"
-                                                                                value="<?php echo $id_user ?>" />
-                                                                            <p>Apakah kamu yakin ingin Menyetujui Pengajuan
-                                                                                ini?</i></b></p>
-                                                                            <div class="form-group">
-                                                                                <label
-                                                                                    for="exampleFormControlTextarea1">Alasan</label>
-                                                                                <textarea class="form-control"
-                                                                                    id="alasan_verifikasi"
-                                                                                    name="alasan_verifikasi"
-                                                                                    rows="3"></textarea>
-                                                                            </div>
-
-                                                                        </div>
+                                                                    <input type="hidden" name="id_cuti"
+                                                                        value="<?php echo $id_cuti ?>" />
+                                                                    <input type="hidden" name="id_user"
+                                                                        value="<?php echo $id_user ?>" />
+                                                                    <p class="text-center">Apakah kamu yakin ingin
+                                                                        menyetujui pengajuan ini?</p>
+                                                                    <div class="form-group">
+                                                                        <label for="alasan_verifikasi"
+                                                                            class="font-weight-bold">Alasan</label>
+                                                                        <textarea class="form-control"
+                                                                            id="alasan_verifikasi" name="alasan_verifikasi"
+                                                                            rows="3"
+                                                                            placeholder="Masukkan alasan persetujuan"></textarea>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-danger ripple"
+                                                                    <div class="modal-footer justify-content-center">
+                                                                        <button type="button" class="btn btn-outline-danger"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success ripple save-category">Ya</button>
+                                                                        <button type="submit" class="btn btn-success">Ya,
+                                                                            Setujui</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -235,47 +226,40 @@
 
                                                 <!-- Modal Tidak Setuju Cuti -->
                                                 <div class="modal fade" id="tidak_setuju<?= $id_cuti ?>" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                    aria-labelledby="modalLabelTolak" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Tolak
-                                                                    Pengajuan
-                                                                </h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
+                                                            <div class="modal-header bg-danger text-white">
+                                                                <h5 class="modal-title" id="modalLabelTolak">Konfirmasi
+                                                                    Penolakan Cuti</h5>
+                                                                <button type="button" class="close text-white"
+                                                                    data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-
                                                             <div class="modal-body">
                                                                 <form
                                                                     action="<?php echo base_url() ?>Cuti/acc_cuti_super_admin/3"
                                                                     method="post" enctype="multipart/form-data">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <input type="hidden" name="id_cuti"
-                                                                                value="<?php echo $id_cuti ?>" />
-                                                                            <input type="hidden" name="id_user"
-                                                                                value="<?php echo $id_user ?>" />
-
-                                                                            <p>Apakah kamu yakin ingin Menolak Pengajuan
-                                                                                ini?</i></b></p>
-                                                                            <div class="form-group">
-                                                                                <label
-                                                                                    for="exampleFormControlTextarea1">Alasan</label>
-                                                                                <textarea class="form-control"
-                                                                                    id="alasan_verifikasi"
-                                                                                    name="alasan_verifikasi"
-                                                                                    rows="3"></textarea>
-                                                                            </div>
-                                                                        </div>
+                                                                    <input type="hidden" name="id_cuti"
+                                                                        value="<?php echo $id_cuti ?>" />
+                                                                    <input type="hidden" name="id_user"
+                                                                        value="<?php echo $id_user ?>" />
+                                                                    <p class="text-center">Apakah kamu yakin ingin menolak
+                                                                        pengajuan ini?</p>
+                                                                    <div class="form-group">
+                                                                        <label for="alasan_verifikasi"
+                                                                            class="font-weight-bold">Alasan</label>
+                                                                        <textarea class="form-control"
+                                                                            id="alasan_verifikasi" name="alasan_verifikasi"
+                                                                            rows="3"
+                                                                            placeholder="Masukkan alasan penolakan"></textarea>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-danger ripple"
+                                                                    <div class="modal-footer justify-content-center">
+                                                                        <button type="button" class="btn btn-outline-danger"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success ripple save-category">Ya</button>
+                                                                        <button type="submit" class="btn btn-secondary">Ya,
+                                                                            Tolak</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
