@@ -3,6 +3,7 @@
 
 <head>
     <?php $this->load->view("admin/components/header.php") ?>
+    
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

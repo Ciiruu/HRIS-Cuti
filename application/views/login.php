@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>GDHY</title>
+    <title>Grand Diamond Hotel Yogyakarta</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -11,7 +11,12 @@
     <!-- CSS Utama -->
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/login/css/main.css">
     <!-- Sweetalert -->
-    <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_package_v0.16/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_package_v0.16/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_package_v0.16/favicon-16x16.png">
+    <link rel="manifest" href="favicon_package_v0.16/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <script src="<?= base_url() ?>node_modules/sweetalert/dist/sweetalert.min.js"></script>
 
     <style>
@@ -20,7 +25,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f3f4f6;
+            background-color: #2E586E;
             font-family: 'poppins', sans-serif;
         }
 
