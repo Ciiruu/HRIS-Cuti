@@ -114,19 +114,19 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example1" class="table mb-0 table-borderless table-striped">
                                         <thead>
 
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Lengkap</th>
-                                                <th>Total Cuti</th> <!-- Tambahkan header Total Cuti -->
+                                                <th>Nama</th>
+                                                <th>Sisa Cuti</th> <!-- Tambahkan header Total Cuti -->
                                                 <th>Alasan</th>
-                                                <th>Tanggal Diajukan</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Berakhir</th>
-                                                <th>Perihal Pengajuan</th>
-                                                <th>Status Pengajuan</th>
+                                                <th>Diajukan</th>
+                                                <th>Mulai</th>
+                                                <th>Berakhir</th>
+                                                <th>Perihal</th>
+                                                <th>Status</th>
                                                 <th>Cetak Surat</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -135,7 +135,7 @@
                                             <?php
 
                                             $no = 0;
-                                            foreach ($cuti as $i) :
+                                            foreach ($cuti as $i):
                                                 $no++;
                                                 $id_cuti = $i['id_cuti'];
                                                 $id_user = $i['id_user'];
@@ -148,7 +148,7 @@
                                                 $id_status_cuti = $i['id_status_cuti'];
                                                 $perihal_cuti = $i['perihal_cuti'];
 
-                                            ?>
+                                                ?>
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $nama_lengkap ?></td>
@@ -161,27 +161,27 @@
                                                     <td><?php if ($id_status_cuti == 1) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-warning" data-toggle="modal"
+                                                                    <a href="" class="badge bg-warning" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Menunggu Konfirmasi Cuti/Absen
+                                                                        Menunggu
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 2) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-success" data-toggle="modal"
+                                                                    <a href="" class="badge bg-success" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Diterima
+                                                                        Diterima
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 3) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-danger" data-toggle="modal"
+                                                                    <a href="" class="badge bg-danger" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Ditolak
+                                                                        Ditolak
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -191,11 +191,11 @@
                                                     <td><?php if ($id_status_cuti == 2) { ?>
                                                             <a href="<?= base_url(); ?>Cetak/surat_cuti_pdf/<?= $id_cuti ?>"
                                                                 class="btn btn-success" target="_blank">
-                                                                Cetak Surat
+                                                                Sudah dapat mencetak
                                                             </a>
                                                         <?php } else { ?>
                                                             <a href="#" class="btn btn-danger">
-                                                                Belum Dapat Mencetak
+                                                                Belum dapat mencetak
                                                             </a>
                                                         <?php } ?>
                                                     </td>
@@ -226,7 +226,8 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data Cuti/Absen
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Data
+                                                                    Cuti/Absen
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
@@ -237,8 +238,8 @@
                                                             <div class="modal-body">
                                                                 <form action="<?= base_url(); ?>Cuti/edit_cuti_admin"
                                                                     method="POST">
-                                                                    <input type="text" value="<?= $id_cuti ?>" name="id_cuti"
-                                                                        hidden>
+                                                                    <input type="text" value="<?= $id_cuti ?>"
+                                                                        name="id_cuti" hidden>
                                                                     <div class="form-group">
                                                                         <label for="alasan">Alasan</label>
                                                                         <textarea class="form-control" id="alasan" rows="3"
@@ -270,7 +271,8 @@
                                                                         <label for="berakhir">Berakhir Cuti/Absen</label>
                                                                         <input type="date" class="form-control"
                                                                             id="berakhir" aria-describedby="berakhir"
-                                                                            name="berakhir" value="<?= $berakhir ?>" required>
+                                                                            name="berakhir" value="<?= $berakhir ?>"
+                                                                            required>
                                                                     </div>
                                                                     <button type="submit"
                                                                         class="btn btn-success">Submit</button>
@@ -286,7 +288,8 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Cuti/Absen
+                                                                <h5 class="modal-title" id="exampleModalLabel">Hapus Data
+                                                                    Cuti/Absen
                                                                 </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">

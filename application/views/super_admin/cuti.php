@@ -77,7 +77,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama</th>
-                                                <th>Total Cuti</th> <!-- Tambahkan header Total Cuti -->
+                                                <th>Sisa Cuti</th> <!-- Tambahkan header Total Cuti -->
                                                 <th>Alasan</th>
                                                 <th>Diajukan</th>
                                                 <th>Mulai</th>

@@ -293,8 +293,9 @@ class Cuti extends CI_Controller
 		$cuti = $this->m_cuti->get_cuti_by_id($id_cuti)->row_array();
 
 		if ($cuti) {
-			// Pastikan bahwa cuti disetujui (status = 2)
-			if ($id_status_cuti == 2) {
+			// Jika status cuti belum disetujui sebelumnya (status != 2)
+			if ($cuti['id_status_cuti'] != 2) {
+				// Proses perhitungan jumlah hari cuti
 				$mulai = new DateTime($cuti['mulai']);
 				$berakhir = new DateTime($cuti['berakhir']);
 				$interval = $mulai->diff($berakhir);
@@ -305,7 +306,7 @@ class Cuti extends CI_Controller
 
 				// Cek apakah total cuti mencukupi
 				if ($total_cuti >= $jumlah_hari_cuti) {
-					// Kurangi total cuti
+					// Kurangi total cuti hanya jika belum disetujui sebelumnya
 					$total_cuti_baru = $total_cuti - $jumlah_hari_cuti;
 
 					// Update total cuti di tabel user_detail
@@ -315,7 +316,7 @@ class Cuti extends CI_Controller
 					$hasil = $this->m_cuti->confirm_cuti($id_cuti, $id_status_cuti, $alasan_verifikasi);
 
 					if ($hasil == false) {
-						$this->session->set_flashdata('eror_input', 'Terjadi kesalahan saat mengonfirmasi cuti.');
+						$this->session->set_flashdata('error_input', 'Terjadi kesalahan saat mengonfirmasi cuti.');
 					} else {
 						$this->session->set_flashdata('input', 'Cuti telah berhasil disetujui dan total cuti telah diperbarui.');
 					}
@@ -324,13 +325,13 @@ class Cuti extends CI_Controller
 					$this->session->set_flashdata('error_cuti', 'Sisa cuti tidak mencukupi untuk permohonan ini.');
 				}
 			} else {
-				// Jika status cuti bukan disetujui, hanya update status cuti tanpa mengurangi total cuti
+				// Jika cuti sudah pernah disetujui (status = 2), update data tanpa mengurangi total cuti
 				$hasil = $this->m_cuti->confirm_cuti($id_cuti, $id_status_cuti, $alasan_verifikasi);
 
 				if ($hasil == false) {
-					$this->session->set_flashdata('eror_input', 'Terjadi kesalahan saat mengonfirmasi cuti.');
+					$this->session->set_flashdata('error_input', 'Terjadi kesalahan saat mengonfirmasi cuti.');
 				} else {
-					$this->session->set_flashdata('input', 'Status cuti telah berhasil diperbarui.');
+					$this->session->set_flashdata('input', 'Status cuti telah berhasil diperbarui tanpa mengurangi total cuti.');
 				}
 			}
 		} else {
@@ -340,14 +341,16 @@ class Cuti extends CI_Controller
 		redirect('Cuti/view_super_admin/' . $id_user);
 	}
 
-	public function update_total_cuti() {
+
+	public function update_total_cuti()
+	{
 		// Ambil total_cuti dari form
 		$total_cuti = $this->input->post('total_cuti');
 		$id_user = $this->input->post('id_user');
-	
+
 		// Ambil data pegawai untuk memeriksa total_cuti
 		$pegawai = $this->m_user->get_pegawai_by_id($id_user)->row_array();
-	
+
 		// Cek apakah total_cuti saat ini sudah ada dan tidak sama dengan 0
 		if ($pegawai['total_cuti'] > 0) {
 			// Set flashdata untuk pesan error jika total_cuti sudah diisi
@@ -362,12 +365,12 @@ class Cuti extends CI_Controller
 				$this->session->set_flashdata('error_message', 'Terjadi kesalahan saat memperbarui total cuti.');
 			}
 		}
-	
+
 		// Redirect kembali ke halaman pegawai/dashboard
 		redirect('Dashboard/dashboard_pegawai'); // Ganti dengan URL yang sesuai
 	}
-	
-	
+
+
 
 
 

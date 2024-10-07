@@ -87,20 +87,19 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example1" class="table mb-0 table-borderless table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Lengkap</th>
-                                                <th>Total Cuti</th> <!-- Tambahkan header Total Cuti -->
+                                                <th>Nama</th>
+                                                <th>Sisa Cuti</th> <!-- Tambahkan header Total Cuti -->
                                                 <th>Alasan</th>
-                                                <th>Tanggal Diajukan</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Berakhir</th>
-                                                <th>Status Pengajuan</th>
-                                                <th>Alsan Verifikasi</th>
-                                                <th>Cetak Surat</th>
-                                                <th>Aksi</th>
+                                                <th>Diajukan</th>
+                                                <th>Mulai</th>
+                                                <th>Berakhir</th>
+                                                <th>Status</th>
+                                                <th>Verifikasi</th>
+                                                <th>Surat</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -128,41 +127,41 @@
                                                     <td><?= $nama_lengkap ?></td>
                                                     <td><?= $total_cuti ?> Hari</td> <!-- Tambahkan kolom Total Cuti -->
                                                     <td><?= $alasan ?></td>
-                                                    <td><?= date('d-M-Y', strtotime($tgl_diajukan));?></td>
-                                                    <td><?= date('d-M-Y', strtotime( $mulai ))?></td>
+                                                    <td><?= date('d-M-Y', strtotime($tgl_diajukan)); ?></td>
+                                                    <td><?= date('d-M-Y', strtotime($mulai)) ?></td>
                                                     <td><?= date('d-M-Y', strtotime($berakhir)) ?></td>
                                                     <td><?php if ($id_status_cuti == 1) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-warning" data-toggle="modal"
+                                                                    <a href="" class="badge bg-warning" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Belum Dikonfirmasi
+                                                                        Menunggu
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 2) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-success" data-toggle="modal"
+                                                                    <a href="" class="badge bg-success" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Diterima
+                                                                        Diterima
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($id_status_cuti == 3) { ?>
                                                             <div class="table-responsive">
                                                                 <div class="table table-striped table-hover ">
-                                                                    <a href="" class="btn btn-danger" data-toggle="modal"
+                                                                    <a href="" class="badge bg-danger" data-toggle="modal"
                                                                         data-target="#edit_data_pegawai">
-                                                                        Pengajuan Cuti/Absen Ditolak
+                                                                        Ditolak
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         <?php } ?>
                                                     </td>
                                                     <td><?php if ($alasan_verifikasi == NULL) { ?>
-                                                            <a href="" class="btn btn-warning">
-                                                                Belum Ada
+                                                            <a href="" class="badge bg-warning">
+                                                                -
                                                             </a>
                                                         <?php } else { ?>
                                                             <?= $alasan_verifikasi ?>
@@ -171,26 +170,14 @@
                                                     <td><?php if ($id_status_cuti == 2) { ?>
                                                             <a href="<?= base_url(); ?>Cetak/surat_cuti_pdf/<?= $id_cuti ?>"
                                                                 target="_blank" class="btn btn-success">
-                                                                Cetak Surat
+                                                                Sudah dapat mencetak
                                                             </a>
                                                         <?php } else { ?>
                                                             <a href="" class="btn btn-danger">
-                                                                Belum Dapat Mencetak
+                                                                Belum dapat mencetak
                                                             </a>
                                                         <?php } ?>
                                                     </td>
-                                                    <td>
-                                                        <div class="table-responsive">
-                                                            <div class="table table-striped table-hover">
-                                                                <!-- Menonaktifkan link dan modal -->
-                                                                <a href="#" class="btn btn-danger disabled"
-                                                                    aria-disabled="true">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
                                                 </tr>
                                                 <!-- Modal Hapus Data Cuti -->
                                                 <div class="modal fade" id="hapus<?= $id_cuti ?>" tabindex="-1"
