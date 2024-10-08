@@ -65,6 +65,24 @@
             });
         </script>
     <?php } ?>
+    <?php if ($this->session->flashdata('success_unggah')) { ?>
+        <script>
+            swal({
+                title: "Success",
+                text: "Data pegawai berhasil Diunggah.",
+                icon: "success"
+            });
+        </script>
+    <?php } ?>
+    <?php if ($this->session->flashdata('error_unggah')) { ?>
+        <script>
+            swal({
+                title: "Erorr!",
+                text: "Data Gagal Diunggah",
+                icon: "error"
+            });
+        </script>
+    <?php } ?>
 
     <div class="wrapper">
 

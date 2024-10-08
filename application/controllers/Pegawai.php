@@ -123,10 +123,10 @@ class Pegawai extends CI_Controller
 					$this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
 				}
 
-				$this->session->set_flashdata('success', 'Data pegawai berhasil diunggah.');
+				$this->session->set_flashdata('success_unggah', 'Data pegawai berhasil diunggah.');
 				redirect('Pegawai/view_admin');
 			} else {
-				$this->session->set_flashdata('error', 'Silakan unggah file Excel.');
+				$this->session->set_flashdata('error_unggah', 'Silakan unggah file Excel.');
 				redirect('Pegawai/view_admin');
 			}
 		} else {
