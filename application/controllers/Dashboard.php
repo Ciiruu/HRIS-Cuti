@@ -40,6 +40,7 @@ class Dashboard extends CI_Controller
 			$data['cuti_confirm'] = $this->m_cuti->count_all_cuti_confirm()->row_array();
 			$data['cuti_reject'] = $this->m_cuti->count_all_cuti_reject()->row_array();
 			$data['pegawai'] = $this->m_user->count_all_pegawai()->row_array();
+			$data['pegawai_per_departemen'] = $this->m_user->get_departemen_dan_pegawai();
 			$this->load->view('admin/dashboard', $data);
 
 		} else {
@@ -83,5 +84,6 @@ class Dashboard extends CI_Controller
 
 		}
 	}
+
 
 }

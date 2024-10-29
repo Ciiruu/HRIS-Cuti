@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label for="nip">NIP</label>
                             <input type="text" class="form-control" id="nip" name="nip" aria-describedby="nip"
-                                value="<?= $nip ?>" required>
+                                value="<?= $nip ?>">
                         </div>
 
                         <div class="form-group">
@@ -118,7 +118,7 @@
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
                             <input type="text" class="form-control" id="jabatan" name="jabatan" aria-describedby="jabatan"
-                                value="<?= $jabatan ?>" required>
+                                value="<?= $jabatan ?>">
                         </div>
                         <div class="form-group">
                             <label for="no_telp">Alamat</label>

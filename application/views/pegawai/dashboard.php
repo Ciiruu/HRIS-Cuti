@@ -96,9 +96,9 @@
                                         if (isset($total_cuti)) {
                                             // Tampilkan total cuti jika ada
                                             if ($total_cuti > 0) {
-                                                echo 'Total Cuti: ' . $total_cuti . ' Hari';
+                                                echo 'Saldo Cuti: ' . $total_cuti . ' Hari';
                                             } else {
-                                                echo 'Tolong Input';
+                                                echo 'Input Saldo Cuti!';
                                             }
                                         } else {
                                             // Jika data cuti pegawai tidak ada atau belum diatur
@@ -106,13 +106,13 @@
                                         }
                                         ?>
                                     </h3>
-                                    <p>Total Cuti</p>
+                                    <p>Saldo Cuti</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
                                 <a href="#" class="small-box-footer btn btn-secondary" data-toggle="modal"
-                                    data-target="#totalCutiModal">Input Total Cuti <i
+                                    data-target="#totalCutiModal">Input Saldo Cuti <i
                                         class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
@@ -124,20 +124,20 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="totalCutiModalLabel">Isi Total Cuti</h5>
+                                        <h5 class="modal-title" id="totalCutiModalLabel">Isi Saldo Cuti</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <?php if (isset($total_cuti) && $total_cuti > 0): ?>
-                                            <p>Total cuti sudah diisi: <?php echo $total_cuti; ?> Hari. Anda tidak bisa
+                                            <p>Saldo cuti sudah diisi: <?php echo $total_cuti; ?> Hari. Anda tidak bisa
                                                 mengubahnya.</p>
                                         <?php else: ?>
                                             <form id="form-total-cuti"
                                                 action="<?php echo site_url('cuti/update_total_cuti'); ?>" method="post">
                                                 <div class="form-group">
-                                                    <label for="total_cuti">Total Cuti Anda</label>
+                                                    <label for="total_cuti">Saldo Cuti Anda</label>
                                                     <input type="number" class="form-control" id="total_cuti"
                                                         name="total_cuti" required min="0" max="365">
                                                 </div>

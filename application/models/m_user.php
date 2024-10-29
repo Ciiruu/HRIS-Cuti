@@ -18,17 +18,6 @@ class M_user extends CI_Model
         return $hasil->result_array(); // Kembalikan hasil sebagai array
     }
 
-
-    // public function get_all_pegawai()
-    // {
-    //     $this->db->select('u.id_user, u.username, d.nama_departemen'); // Ambil nama departemen
-    //     $this->db->from('user u'); // Gunakan tabel user
-    //     $this->db->join('departemen d', 'u.id_department = d.id_department', 'left'); // Lakukan join ke tabel departemen
-    //     $query = $this->db->get();
-    //     return $query->result_array(); // Pastikan hasilnya berupa array
-    // }
-
-
     public function count_all_pegawai()
     {
         $hasil = $this->db->query('SELECT COUNT(id_user) as total_user FROM user JOIN user_detail ON user.id_user_detail = user_detail.id_user_detail 
@@ -205,6 +194,17 @@ class M_user extends CI_Model
             return false;
     }
 
+    public function get_all_total_cuti() {
+        $this->db->select('id_user_detail as id_user, total_cuti, nama_lengkap, jabatan'); // Sesuaikan kolom yang ada
+        $this->db->from('user_detail');
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            return $query->result_array(); // Mengembalikan array hasil
+        } else {
+            return []; // Mengembalikan array kosong jika tidak ada data
+        }
+    }
     public function get_total_cuti_by_user($id_user)
     {
         $this->db->select('total_cuti');
@@ -226,20 +226,16 @@ class M_user extends CI_Model
         $this->db->where('id_user_detail', $id_user); // Pastikan tidak ada tanda kurung
         return $this->db->update('user_detail'); // Pastikan nama tabel yang benar
     }
-    
-    
 
+    // pie chart
+    public function get_departemen_dan_pegawai() {
+        $this->db->select('d.nama_department, COUNT(u.id_department) AS total');
+        $this->db->from('department d');
+        $this->db->join('user_detail u', 'u.id_department = d.id_department', 'left');
+        $this->db->group_by('d.id_department');
+        $query = $this->db->get();
 
-
-    // Model M_user.php
-    // public function reduce_total_cuti($id_user, $jumlah_hari)
-    // {
-    //     $this->db->set('total_cuti', 'total_cuti - ' . (int)$jumlah_hari, FALSE); // Mengurangi total_cuti
-    //     $this->db->where('id_user', $id_user);
-    //     return $this->db->update('user_detail'); // Gantilah dengan nama tabel yang sesuai
-    // }
-
-
-
+        return $query->result_array();
+    }
 
 }

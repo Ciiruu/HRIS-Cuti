@@ -29,12 +29,12 @@ class Form_Cuti extends CI_Controller
 		}
 	}
 
+
 	// Proses pengajuan cuti baru dengan pengecekan cuti menunggu konfirmasi dan pengurangan total cuti
 	public function proses_cuti()
 	{
 		// Memastikan user sudah login dan memiliki level user yang tepat
 		if ($this->session->userdata('logged_in') == true && $this->session->userdata('id_user_level') == 1) {
-
 			// Mengambil data dari input form
 			$id_user = $this->input->post("id_user");
 			$alasan = $this->input->post("alasan");
@@ -43,11 +43,32 @@ class Form_Cuti extends CI_Controller
 			$berakhir = $this->input->post("berakhir");
 			$id_status_cuti = 1; // Status cuti: Menunggu konfirmasi
 
+			// Mengecek saldo cuti user menggunakan model m_user
+			$total_cuti_data = $this->m_user->get_total_cuti_by_user($id_user);
+			$total_cuti = $total_cuti_data['total_cuti'];
+
+			// Jika saldo atau total cuti belum diisi (atau bernilai nol), tampilkan pesan error
+			if (empty($total_cuti) || $total_cuti <= 0) {
+				$this->session->set_flashdata('error', 'Saldo cuti Anda belum diisi atau bernilai nol. Harap hubungi admin untuk mengisi saldo cuti Anda.');
+				redirect('Form_Cuti/view_pegawai');
+				return;
+			}
+
+			// Mengambil nama lengkap dari session
+			$nama_lengkap = $this->session->userdata('nama_lengkap');
+
 			// Menghitung jumlah hari cuti
 			$datetime1 = new DateTime($mulai);
 			$datetime2 = new DateTime($berakhir);
 			$interval = $datetime1->diff($datetime2);
 			$jumlah_hari_cuti = $interval->days + 1;
+
+			// Cek jika jumlah hari cuti kurang dari atau sama dengan nol
+			if ($jumlah_hari_cuti <= 0) {
+				$this->session->set_flashdata('error', 'Tanggal berakhir harus lebih besar dari tanggal mulai.');
+				redirect('Form_Cuti/view_pegawai');
+				return;
+			}
 
 			// Simpan data pengajuan cuti
 			$id_cuti = md5($id_user . $alasan . $mulai);
@@ -56,11 +77,11 @@ class Form_Cuti extends CI_Controller
 			// Kirim notifikasi ke super_admin
 			$chat_id = '6668370491'; // Ganti dengan chat_id yang sesuai
 			// Buat pesan notifikasi
-			$message = "Permohonan cuti baru telah diajukan.\n" .
+			$message = "Permohonan cuti baru telah diajukan oleh $nama_lengkap.\n" .
 				"Perihal: $perihal_cuti\n" .
 				"Alasan: $alasan\n" .
-				"Mulai: $mulai\n" .
-				"Berakhir: $berakhir\n" .
+				"Mulai: " . date('d-M-Y', strtotime($mulai)) . "\n" .
+				"Berakhir: " . date('d-M-Y', strtotime($berakhir)) . "\n" .
 				"Jumlah hari: $jumlah_hari_cuti\n" .
 				"Status: Menunggu konfirmasi.";
 
@@ -83,10 +104,4 @@ class Form_Cuti extends CI_Controller
 			redirect('Login/index');
 		}
 	}
-
-
-
-
-
-
 }

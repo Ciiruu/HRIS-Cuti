@@ -95,6 +95,22 @@ class Cuti extends CI_Controller
 
 	}
 
+	public function saldo_cuti() {
+		// Cek apakah user sudah login dan memiliki akses admin
+		if ($this->session->userdata('logged_in') == true && $this->session->userdata('id_user_level') == 2) {
+			// Mengambil data saldo cuti semua karyawan
+			$data['data_cuti'] = $this->m_user->get_all_total_cuti();
+	
+			// Memuat view saldo_cuti.php
+			$this->load->view('admin/saldo_cuti', $data); // Pastikan path view sesuai
+		} else {
+			// Jika tidak memiliki akses, redirect ke halaman login
+			$this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+			redirect('Login/index');
+		}
+	}
+	
+
 	// menunggu konfirmasi
 	public function view_admin_waiting_cuti()
 	{
@@ -252,18 +268,48 @@ class Cuti extends CI_Controller
 		$tgl_diajukan = $this->input->post("tgl_diajukan");
 		$mulai = $this->input->post("mulai");
 		$berakhir = $this->input->post("berakhir");
+		$total_cuti = $this->input->post("total_cuti");
+		$id_user = $this->input->post("id_user"); // Pastikan id_user dikirim dari form
 
+		// Update data cuti
+		$hasil_cuti = $this->m_cuti->update_cuti($alasan, $perihal_cuti, $tgl_diajukan, $mulai, $berakhir, $id_cuti);
 
-		$hasil = $this->m_cuti->update_cuti($alasan, $perihal_cuti, $tgl_diajukan, $mulai, $berakhir, $id_cuti);
+		// Update total cuti user
+		$hasil_total_cuti = $this->m_user->update_total_cuti($id_user, $total_cuti);
 
-		if ($hasil == false) {
+		// Cek apakah kedua update berhasil
+		if ($hasil_cuti == false || $hasil_total_cuti == false) {
 			$this->session->set_flashdata('eror_edit', 'eror_edit');
 		} else {
 			$this->session->set_flashdata('edit', 'edit');
 		}
 
+		// Redirect kembali ke halaman admin
 		redirect('Cuti/view_admin');
 	}
+
+	public function update_total_cuti_admin()
+	{
+		$id_user = $this->input->post("id_user"); // Pastikan id_user dikirim dari form
+		$total_cuti = $this->input->post("total_cuti");
+
+		// Update total cuti user
+		$hasil_total_cuti = $this->m_user->update_total_cuti($id_user, $total_cuti);
+
+		// Cek apakah update berhasil
+		if ($hasil_total_cuti == false) {
+			$this->session->set_flashdata('error_update', 'Gagal mengupdate total cuti');
+		} else {
+			$this->session->set_flashdata('success_update', 'Berhasil mengupdate total cuti');
+		}
+
+		// Redirect kembali ke halaman saldo cuti
+		redirect('Cuti/saldo_cuti');
+	}
+
+
+
+
 
 	public function acc_cuti_admin($id_status_cuti)
 	{

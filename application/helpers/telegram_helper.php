@@ -1,4 +1,3 @@
-// Dalam helper telegram_helper.php
 <?php
 if (!function_exists('send_telegram_notification')) {
     function send_telegram_notification($chat_id, $message)

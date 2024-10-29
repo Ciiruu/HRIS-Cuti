@@ -227,8 +227,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Edit Data
-                                                                    Cuti/Absen
-                                                                </h5>
+                                                                    Cuti/Absen</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
@@ -248,32 +247,34 @@
                                                                     <div class="form-group">
                                                                         <label for="perihal_cuti">Perihal Cuti/Absen</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="perihal_cuti"
-                                                                            aria-describedby="perihal_cuti"
-                                                                            name="perihal_cuti" value="<?= $perihal_cuti ?>"
-                                                                            required>
+                                                                            id="perihal_cuti" name="perihal_cuti"
+                                                                            value="<?= $perihal_cuti ?>" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="tgl_diajukan">Tanggal Diajukan</label>
                                                                         <input type="date" class="form-control"
-                                                                            id="tgl_diajukan"
-                                                                            aria-describedby="tgl_diajukan"
-                                                                            name="tgl_diajukan" value="<?= $tgl_diajukan ?>"
-                                                                            required>
+                                                                            id="tgl_diajukan" name="tgl_diajukan"
+                                                                            value="<?= $tgl_diajukan ?>" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="mulai">Mulai Cuti/Absen</label>
                                                                         <input type="date" class="form-control" id="mulai"
-                                                                            aria-describedby="mulai" name="mulai"
-                                                                            value="<?= $mulai ?>" required>
+                                                                            name="mulai" value="<?= $mulai ?>" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="berakhir">Berakhir Cuti/Absen</label>
                                                                         <input type="date" class="form-control"
-                                                                            id="berakhir" aria-describedby="berakhir"
-                                                                            name="berakhir" value="<?= $berakhir ?>"
-                                                                            required>
+                                                                            id="berakhir" name="berakhir"
+                                                                            value="<?= $berakhir ?>" required>
                                                                     </div>
+                                                                    <div class="form-group">
+                                                                        <label for="total_cuti">Sisa Cuti</label>
+                                                                        <input type="number" class="form-control"
+                                                                            id="total_cuti" name="total_cuti"
+                                                                            value="<?= $total_cuti ?>" required>
+                                                                    </div>
+                                                                    <input type="hidden" name="id_user"
+                                                                        value="<?= $id_user ?>">
                                                                     <button type="submit"
                                                                         class="btn btn-success">Submit</button>
                                                                 </form>
@@ -281,6 +282,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
 
                                                 <!-- Modal Hapus Cuti -->
                                                 <div class="modal fade" id="hapus<?= $id_cuti ?>" tabindex="-1"
