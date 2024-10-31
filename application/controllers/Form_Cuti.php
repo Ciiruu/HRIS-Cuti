@@ -75,7 +75,7 @@ class Form_Cuti extends CI_Controller
 			$this->m_cuti->insert_data_cuti('cuti-' . substr($id_cuti, 0, 5), $id_user, $alasan, $mulai, $berakhir, $id_status_cuti, $perihal_cuti);
 
 			// Kirim notifikasi ke super_admin
-			$chat_id = '6668370491'; // Ganti dengan chat_id yang sesuai
+			$chat_id = '5272178819'; // Ganti dengan chat_id yang sesuai
 			// Buat pesan notifikasi
 			$message = "Permohonan cuti baru telah diajukan oleh $nama_lengkap.\n" .
 				"Perihal: $perihal_cuti\n" .
