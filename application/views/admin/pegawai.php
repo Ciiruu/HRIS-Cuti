@@ -6,7 +6,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <?php if ($this->session->flashdata('input')) { ?>
+    <?php if ($this->session->flashdata('berhasil_tambah1')) { ?>
         <script>
             swal({
                 title: "Success!",
@@ -16,7 +16,7 @@
         </script>
     <?php } ?>
 
-    <?php if ($this->session->flashdata('eror')) { ?>
+    <?php if ($this->session->flashdata('gagal_tambah1')) { ?>
         <script>
             swal({
                 title: "Erorr!",
@@ -423,7 +423,7 @@
                                     name="password" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">email</label>
+                                <label for="email">Email</label>
                                 <input type="text" class="form-control" id="email" aria-describedby="email" name="email"
                                     required>
                             </div>
@@ -440,7 +440,6 @@
                                         $jenis_kelamin = $u["jenis_kelamin"];
                                         ?>
                                         <option value="<?= $id ?>"><?= $jenis_kelamin ?></option>
-
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -454,12 +453,17 @@
                                 <input type="text" class="form-control" id="alamat" aria-describedby="alamat"
                                     name="alamat" required>
                             </div>
+                            <div class="form-group">
+                                <label for="total_cuti">Total Cuti</label>
+                                <input type="number" class="form-control" id="total_cuti" name="total_cuti" required>
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
         <!-- Control Sidebar -->

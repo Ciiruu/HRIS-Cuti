@@ -94,15 +94,15 @@
                                         <?php
                                         // Cek apakah data total_cuti sudah didefinisikan dan valid
                                         if (isset($total_cuti)) {
-                                            // Tampilkan total cuti jika ada
-                                            if ($total_cuti > 0) {
-                                                echo 'Saldo Cuti: ' . $total_cuti . ' Hari';
+                                            // Tampilkan pesan jika saldo cuti belum diatur
+                                            if ($total_cuti <= 0) {
+                                                echo 'Tolong Input';
                                             } else {
-                                                echo 'Input Saldo Cuti!';
+                                                echo 'Saldo Cuti: ' . $total_cuti . ' Hari';
                                             }
                                         } else {
                                             // Jika data cuti pegawai tidak ada atau belum diatur
-                                            echo 'Tolong Input';
+                                            echo 'Tolong Hubungi Admin!';
                                         }
                                         ?>
                                     </h3>
@@ -112,8 +112,8 @@
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
                                 <a href="#" class="small-box-footer btn btn-secondary" data-toggle="modal"
-                                    data-target="#totalCutiModal">Input Saldo Cuti <i
-                                        class="fas fa-arrow-circle-right"></i>
+                                    data-target="#totalCutiModal">
+                                    Hubungi Admin <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -124,41 +124,25 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="totalCutiModalLabel">Isi Saldo Cuti</h5>
+                                        <h5 class="modal-title" id="totalCutiModalLabel">Informasi Saldo Cuti</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <?php if (isset($total_cuti) && $total_cuti > 0): ?>
-                                            <p>Saldo cuti sudah diisi: <?php echo $total_cuti; ?> Hari. Anda tidak bisa
-                                                mengubahnya.</p>
+                                            <p>Saldo cuti Anda sudah diisi: <?php echo $total_cuti; ?> Hari.</p>
                                         <?php else: ?>
-                                            <form id="form-total-cuti"
-                                                action="<?php echo site_url('cuti/update_total_cuti'); ?>" method="post">
-                                                <div class="form-group">
-                                                    <label for="total_cuti">Saldo Cuti Anda</label>
-                                                    <input type="number" class="form-control" id="total_cuti"
-                                                        name="total_cuti" required min="0" max="365">
-                                                </div>
-                                                <input type="hidden" name="id_user"
-                                                    value="<?= $this->session->userdata('id_user'); ?>">
-                                            </form>
+                                            <p>Saldo cuti belum diisi. Silakan hubungi admin untuk mengisi saldo cuti Anda.
+                                            </p>
                                         <?php endif; ?>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        <?php if (!isset($total_cuti) || $total_cuti == 0): ?>
-                                            <button type="submit" form="form-total-cuti"
-                                                class="btn btn-success">Simpan</button>
-                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
                         <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box bg-info">

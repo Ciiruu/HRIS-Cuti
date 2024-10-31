@@ -62,16 +62,17 @@ class Pegawai extends CI_Controller
 			$no_telp = $this->input->post("no_telp");
 			$alamat = $this->input->post("alamat");
 			$id_department = $this->input->post("id_department"); // Ambil departemen dari input
+			$total_cuti = $this->input->post("total_cuti"); // Ambil total cuti dari input
 			$id_user_level = 1;
 			$id = md5($username . $email . $password);
 
-			$hasil = $this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
+			$hasil = $this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department, $total_cuti);
 
 			if ($hasil == false) {
-				$this->session->set_flashdata('error', 'Gagal menambahkan pegawai.');
+				$this->session->set_flashdata('gagal_tambah1', 'Gagal menambahkan pegawai.');
 				redirect('Pegawai/view_admin');
 			} else {
-				$this->session->set_flashdata('success', 'Pegawai berhasil ditambahkan.');
+				$this->session->set_flashdata('berhasil_tambah1', 'Pegawai berhasil ditambahkan.');
 				redirect('Pegawai/view_admin');
 			}
 		} else {
@@ -79,6 +80,7 @@ class Pegawai extends CI_Controller
 			redirect('Login/index');
 		}
 	}
+
 
 
 	public function upload_excel()
@@ -104,6 +106,7 @@ class Pegawai extends CI_Controller
 					$no_telp = $sheet->getCell('F' . $row)->getValue();
 					$alamat = $sheet->getCell('G' . $row)->getValue();
 					$id_department = $sheet->getCell('H' . $row)->getValue(); // Ambil id_department dari kolom H
+					$total_cuti = $sheet->getCell('I' . $row)->getValue(); // Ambil total cuti dari kolom I
 					$id_user_level = 1;
 					$id = md5($username . $email . $password);
 
@@ -117,10 +120,12 @@ class Pegawai extends CI_Controller
 						'id_jenis_kelamin' => $id_jenis_kelamin,
 						'no_telp' => $no_telp,
 						'alamat' => $alamat,
-						'id_department' => $id_department // Tambahkan id_department
+						'id_department' => $id_department, // Tambahkan id_department
+						'total_cuti' => $total_cuti // Tambahkan total_cuti
 					);
 
-					$this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
+					// Panggil method insert_pegawai dan tambahkan total_cuti
+					$this->m_user->insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department, $total_cuti);
 				}
 
 				$this->session->set_flashdata('success_unggah', 'Data pegawai berhasil diunggah.');
@@ -135,6 +140,7 @@ class Pegawai extends CI_Controller
 		}
 	}
 
+
 	// sampai sini
 
 	// function untuk download template
@@ -144,7 +150,7 @@ class Pegawai extends CI_Controller
 	{
 		if ($this->session->userdata('logged_in') == true and $this->session->userdata('id_user_level') == 2) {
 
-			
+
 			$username = $this->input->post("username");
 			$password = $this->input->post("password");
 			$email = $this->input->post("email");
@@ -156,10 +162,10 @@ class Pegawai extends CI_Controller
 			$id_user_level = 1;
 			$id = $this->input->post("id_user");
 
-			
 
 
-			$hasil = $this->m_user->update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat,$id_department);
+
+			$hasil = $this->m_user->update_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department);
 
 			if ($hasil == false) {
 				$this->session->set_flashdata('eror_edit', 'eror_edit');

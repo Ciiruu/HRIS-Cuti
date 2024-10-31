@@ -90,7 +90,7 @@ class M_user extends CI_Model
         return $this->db->trans_status();
     }
 
-    public function insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department)
+    public function insert_pegawai($id, $username, $email, $password, $id_user_level, $nama_lengkap, $id_jenis_kelamin, $no_telp, $alamat, $id_department, $total_cuti)
     {
         $this->db->trans_start();
 
@@ -103,6 +103,7 @@ class M_user extends CI_Model
             'id_user_level' => $id_user_level,
             'id_user_detail' => $id,
             'id_department' => $id_department,
+            // 'total_cuti' => $total_cuti
         ]);
 
         // Insert into user_detail
@@ -113,6 +114,7 @@ class M_user extends CI_Model
             'no_telp' => $no_telp,
             'alamat' => $alamat,
             'id_department' => $id_department, // Pastikan nama kolom ini benar
+            'total_cuti' => $total_cuti,
         ]);
 
         $this->db->trans_complete();
